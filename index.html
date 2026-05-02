@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NyayTrack — Court Case Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0f0e0c;
+  --bg2:       #171613;
+  --bg3:       #1f1d1a;
+  --bg4:       #272420;
+  --border:    #2e2b26;
+  --border2:   #3a3630;
+  --gold:      #c9a84c;
+  --gold2:     #e8c97a;
+  --gold-dim:  rgba(201,168,76,0.12);
+  --gold-glow: rgba(201,168,76,0.06);
+  --text:      #f0ece4;
+  --text2:     #a89f90;
+  --text3:     #6b6358;
+  --green:     #4a7c59;
+  --green-bg:  rgba(74,124,89,0.15);
+  --red:       #9b3a3a;
+  --red-bg:    rgba(155,58,58,0.15);
+  --red-bright:#e05252;
+  --blue:      #3d6b9c;
+  --blue-bg:   rgba(61,107,156,0.15);
+  --amber:     #a07030;
+  --amber-bg:  rgba(160,112,48,0.15);
+  --radius:    10px;
+  --radius-lg: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── SIDEBAR ───────────────────────────────────────── */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 200px;
+  background: radial-gradient(ellipse at 30% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.logo-area {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
+
+.logo-tagline {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 4px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.sync-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 7px 10px;
+  background: var(--gold-glow);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sync-row:hover { background: var(--gold-dim); border-color: var(--gold); }
+.sync-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.sync-text { font-size: 11px; color: var(--text2); font-weight: 500; }
+.sync-time { font-size: 10px; color: var(--text3); margin-left: auto; font-family: 'DM Mono', monospace; }
+
+.nav-section { padding: 16px 12px 4px; }
+.nav-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 0 8px;
+  margin-bottom: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 400;
+  margin-bottom: 1px;
+  transition: all 0.15s;
+  position: relative;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); }
+.nav-item.active {
+  background: var(--gold-dim);
+  color: var(--gold2);
+  font-weight: 500;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+.nav-icon { width: 16px; text-align: center; font-size: 14px; opacity: 0.8; }
+.nav-badge {
+  margin-left: auto;
+  font-size: 10px;
+  background: var(--bg4);
+  color: var(--text3);
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-family: 'DM Mono', monospace;
+}
+.nav-badge.urgent { background: var(--red-bg); color: var(--red-bright); }
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+}
+.advocate-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.advocate-bar { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.advocate-avatar {
+  width: 32px; height: 32px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  color: var(--gold);
+  margin-right: 10px;
+  float: left;
+}
+
+/* ── MAIN ───────────────────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.topbar-actions { display: flex; gap: 8px; align-items: center; }
+
+.btn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  background: var(--bg3);
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.btn:hover { border-color: var(--border2); background: var(--bg4); color: var(--text); }
+.btn-gold {
+  background: var(--gold);
+  color: #0f0e0c;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+.btn-gold:hover { background: var(--gold2); color: #0f0e0c; }
+
+.search-box {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 12px;
+  width: 220px;
+}
+.search-box input {
+  background: none; border: none; outline: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; color: var(--text);
+  width: 100%;
+}
+.search-box input::placeholder { color: var(--text3); }
+.search-icon { color: var(--text3); font-size: 13px; }
+
+/* ── CONTENT ────────────────────────────────────────── */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px;
+  display: flex;
+  gap: 20px;
+}
+
+.content::-webkit-scrollbar { width: 4px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── LEFT COLUMN ────────────────────────────────────── */
+.col-left { flex: 1; min-width: 0; }
+.col-right { width: 320px; flex-shrink: 0; }
+
+/* ── STATS ─────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: var(--border2); }
+.stat-card.highlight { border-color: var(--gold); }
+.stat-card.highlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold-glow);
+  pointer-events: none;
+}
+
+.stat-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600; }
+.stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 4px 0 2px;
+  line-height: 1;
+}
+.stat-card.highlight .stat-val { color: var(--gold2); }
+.stat-sub { font-size: 11px; color: var(--text3); }
+
+/* ── ALERT ─────────────────────────────────────────── */
+.alert-banner {
+  background: rgba(155,58,58,0.1);
+  border: 1px solid rgba(155,58,58,0.4);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  animation: slideIn 0.4s ease;
+}
+@keyframes slideIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:none; } }
+
+.alert-icon {
+  width: 24px; height: 24px;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.alert-text { font-size: 12px; color: #e8a0a0; line-height: 1.5; }
+.alert-text strong { color: #f0c0c0; font-weight: 600; }
+.alert-action {
+  margin-left: auto; flex-shrink: 0;
+  font-size: 11px; font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--red);
+  background: var(--red-bg);
+  color: var(--red-bright);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.alert-action:hover { background: var(--red); color: white; }
+
+/* ── CASES TABLE ────────────────────────────────────── */
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.section-link { font-size: 12px; color: var(--gold); cursor: pointer; }
+.section-link:hover { color: var(--gold2); }
+
+.cases-table {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.table-head {
+  display: grid;
+  grid-template-columns: 2.2fr 1.4fr 1fr 1fr 0.9fr;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+}
+.th { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; }
+
+.table-row {
+  display: grid;
+  grid-template-columns: 2.2fr 1.4fr 1fr 1fr 0.9fr;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.12s;
+  align-items: center;
+}
+.table-row:last-child { border-bottom: none; }
+.table-row:hover { background: var(--bg3); }
+.table-row.selected { background: var(--gold-glow); }
+.table-row.selected .case-title-text { color: var(--gold2); }
+
+.urgent-blink { display: inline-block; width: 6px; height: 6px; background: var(--red-bright); border-radius: 50%; margin-right: 6px; animation: blink 1.4s ease-in-out infinite; vertical-align: middle; }
+@keyframes blink { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(224,82,82,0.4)} 50%{opacity:0.4;box-shadow:0 0 0 4px transparent} }
+
+.case-title-text { font-size: 13px; font-weight: 500; color: var(--text); }
+.case-sub { font-size: 11px; color: var(--text3); margin-top: 2px; font-family: 'DM Mono', monospace; }
+
+.td { font-size: 12px; color: var(--text2); }
+.td.urgent { color: var(--red-bright); font-weight: 600; }
+.td.mono { font-family: 'DM Mono', monospace; font-size: 11px; }
+
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.badge-hearing { background: var(--blue-bg); color: #7ab0e0; border: 1px solid rgba(61,107,156,0.3); }
+.badge-reserved { background: var(--amber-bg); color: #d4a057; border: 1px solid rgba(160,112,48,0.3); }
+.badge-notice { background: var(--red-bg); color: #e08080; border: 1px solid rgba(155,58,58,0.3); }
+.badge-disposed { background: var(--green-bg); color: #7ac494; border: 1px solid rgba(74,124,89,0.3); }
+
+/* ── RIGHT COLUMN ───────────────────────────────────── */
+.detail-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.detail-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.detail-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.detail-case-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.detail-meta { font-size: 11px; color: var(--text3); line-height: 1.6; }
+.detail-meta span { color: var(--text2); }
+
+.detail-tags { display: flex; gap: 5px; flex-wrap: wrap; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+.tag {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+  padding: 3px 8px; border-radius: 6px;
+  background: var(--bg4); color: var(--text3);
+  border: 1px solid var(--border);
+  text-transform: uppercase;
+}
+.tag.gold { background: var(--gold-dim); color: var(--gold); border-color: rgba(201,168,76,0.3); }
+
+.detail-section { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.detail-section:last-child { border-bottom: none; }
+.ds-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.info-item { }
+.info-key { font-size: 10px; color: var(--text3); margin-bottom: 2px; }
+.info-val { font-size: 12px; color: var(--text); font-weight: 500; }
+.info-val.mono { font-family: 'DM Mono', monospace; font-size: 11px; }
+
+/* ── TIMELINE ───────────────────────────────────────── */
+.timeline { padding: 0 4px; }
+.tl-item { display: flex; gap: 12px; margin-bottom: 12px; position: relative; }
+.tl-item:last-child { margin-bottom: 0; }
+
+.tl-left { display: flex; flex-direction: column; align-items: center; width: 14px; }
+.tl-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  background: var(--bg3);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.tl-dot.done { background: var(--green); border-color: var(--green); }
+.tl-dot.next { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 8px rgba(201,168,76,0.4); }
+.tl-dot.future { background: var(--bg4); border-color: var(--border); }
+.tl-line { width: 1px; flex: 1; background: var(--border); margin-top: 4px; min-height: 12px; }
+.tl-item:last-child .tl-line { display: none; }
+
+.tl-right { flex: 1; padding-bottom: 0; }
+.tl-date { font-size: 10px; color: var(--text3); font-family: 'DM Mono', monospace; }
+.tl-date.next-date { color: var(--gold); font-weight: 600; }
+.tl-event { font-size: 12px; font-weight: 500; color: var(--text); margin-top: 1px; }
+.tl-note { font-size: 11px; color: var(--text3); margin-top: 1px; line-height: 1.4; }
+
+/* ── NOTIFY SECTION ─────────────────────────────────── */
+.notify-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+}
+.notify-client { font-size: 12px; color: var(--text2); margin-bottom: 10px; }
+.notify-client strong { color: var(--text); font-weight: 500; }
+.notify-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.nbtn {
+  font-size: 12px; font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  background: var(--bg3);
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.nbtn:hover { background: var(--bg4); color: var(--text); border-color: var(--border2); }
+.nbtn.whatsapp:hover { background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.3); color: #25d366; }
+.nbtn.sms:hover { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+
+/* ── MODAL (Add Case) ───────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  width: 400px;
+  transform: translateY(16px);
+  transition: transform 0.25s ease;
+}
+.modal-overlay.open .modal { transform: none; }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text); margin-bottom: 4px; }
+.modal-sub { font-size: 12px; color: var(--text3); margin-bottom: 20px; }
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-input:focus { border-color: var(--gold); }
+.form-input::placeholder { color: var(--text3); }
+.form-input.mono { font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.modal-actions { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; }
+
+/* ── TOAST ──────────────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--bg3);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13px; color: var(--text);
+  display: flex; align-items: center; gap: 10px;
+  z-index: 200;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  max-width: 320px;
+}
+.toast.show { transform: none; opacity: 1; }
+.toast-icon { font-size: 16px; }
+
+/* ── ANIMATIONS ─────────────────────────────────────── */
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+.stagger > * { opacity: 0; animation: fadeIn 0.3s ease forwards; }
+.stagger > *:nth-child(1){animation-delay:0.05s}
+.stagger > *:nth-child(2){animation-delay:0.10s}
+.stagger > *:nth-child(3){animation-delay:0.15s}
+.stagger > *:nth-child(4){animation-delay:0.20s}
+</style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="logo-area">
+    <div class="logo">NyayTrack</div>
+    <div class="logo-tagline">Malappuram District</div>
+    <div class="sync-row" onclick="triggerSync()">
+      <div class="sync-dot"></div>
+      <div class="sync-text">eCourts Synced</div>
+      <div class="sync-time" id="syncTime">07:31</div>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Cases</div>
+    <div class="nav-item active" onclick="filterCases('all')">
+      <span class="nav-icon">⚖</span> All Cases
+      <span class="nav-badge">7</span>
+    </div>
+    <div class="nav-item" onclick="filterCases('urgent')">
+      <span class="nav-icon">🔴</span> Urgent
+      <span class="nav-badge urgent">2</span>
+    </div>
+    <div class="nav-item" onclick="filterCases('week')">
+      <span class="nav-icon">📅</span> This Week
+      <span class="nav-badge">4</span>
+    </div>
+    <div class="nav-item" onclick="filterCases('disposed')">
+      <span class="nav-icon">✓</span> Disposed
+      <span class="nav-badge">3</span>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Courts</div>
+    <div class="nav-item"><span class="nav-icon">🏛</span> Malappuram District</div>
+    <div class="nav-item"><span class="nav-icon">🏛</span> Kerala High Court</div>
+    <div class="nav-item"><span class="nav-icon">🏛</span> Munsiff Court</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Clients</div>
+    <div class="nav-item"><span class="nav-icon">👤</span> Mohammed Salim</div>
+    <div class="nav-item"><span class="nav-icon">👤</span> Fathima Beevi</div>
+    <div class="nav-item"><span class="nav-icon">👤</span> Rajan K.V.</div>
+    <div class="nav-item"><span class="nav-icon">👥</span> All Clients</div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div style="display:flex;align-items:center;">
+      <div class="advocate-avatar">A</div>
+      <div>
+        <div class="advocate-name">Adv. Anitha Mohan</div>
+        <div class="advocate-bar">Malappuram Bar Assoc.</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ══ MAIN ══════════════════════════════════════════════ -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="page-title" id="pageTitle">Active Cases</div>
+    <div class="topbar-actions">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input type="text" placeholder="Search CNR, party name…" oninput="searchCases(this.value)">
+      </div>
+      <button class="btn" onclick="exportData()">Export</button>
+      <button class="btn" onclick="triggerSync()">↻ Sync</button>
+      <button class="btn btn-gold" onclick="openModal()">+ Add Case</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- LEFT COLUMN -->
+    <div class="col-left">
+
+      <!-- Stats -->
+      <div class="stats-grid stagger" id="statsGrid">
+        <div class="stat-card highlight">
+          <div class="stat-label">Active Cases</div>
+          <div class="stat-val">7</div>
+          <div class="stat-sub">Across 3 courts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Hearings This Week</div>
+          <div class="stat-val">4</div>
+          <div class="stat-sub">Next: Mon 5 May</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending Notifications</div>
+          <div class="stat-val">2</div>
+          <div class="stat-sub">Awaiting acknowledgement</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Disposed (2025)</div>
+          <div class="stat-val">3</div>
+          <div class="stat-sub">Resolved this year</div>
+        </div>
+      </div>
+
+      <!-- Alert Banner -->
+      <div class="alert-banner" id="alertBanner">
+        <div class="alert-icon">!</div>
+        <div class="alert-text">
+          <strong>Hearing tomorrow (5 May)</strong> — Mohammed Salim has not acknowledged the reminder. Resend notification?
+        </div>
+        <button class="alert-action" onclick="resendNotif()">Resend ↗</button>
+      </div>
+
+      <!-- Cases Table -->
+      <div class="section-header">
+        <div class="section-title" id="tableTitle">All Cases</div>
+        <div class="section-link">Sort by date ↓</div>
+      </div>
+
+      <div class="cases-table">
+        <div class="table-head">
+          <div class="th">Case</div>
+          <div class="th">Court</div>
+          <div class="th">Next Date</div>
+          <div class="th">Status</div>
+          <div class="th">Client</div>
+        </div>
+        <div id="tableBody"></div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-right">
+
+      <!-- Detail Panel -->
+      <div class="detail-panel" id="detailPanel">
+        <div class="detail-header">
+          <div class="detail-case-name" id="detailName">Select a case</div>
+          <div class="detail-meta" id="detailMeta">Click any row to view case details and history</div>
+        </div>
+        <div class="detail-tags" id="detailTags"></div>
+        <div class="detail-section">
+          <div class="ds-label">Case Information</div>
+          <div class="info-grid" id="detailInfo"></div>
+        </div>
+        <div class="detail-section">
+          <div class="ds-label">Hearing Timeline</div>
+          <div class="timeline" id="detailTimeline"></div>
+        </div>
+      </div>
+
+      <!-- Notify Section -->
+      <div class="notify-section" id="notifySection" style="display:none">
+        <div class="ds-label" style="margin-bottom:10px;">Notify Client</div>
+        <div class="notify-client" id="notifyClient"></div>
+        <div class="notify-btns">
+          <button class="nbtn whatsapp" onclick="sendNotif('WhatsApp')">💬 WhatsApp</button>
+          <button class="nbtn sms" onclick="sendNotif('SMS')">📱 SMS</button>
+          <button class="nbtn" onclick="sendNotif('Email')">✉ Email</button>
+          <button class="nbtn" onclick="sendNotif('Call')">📞 Reminder Call</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL ═══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-title">Add New Case</div>
+    <div class="modal-sub">Enter the CNR number to auto-fetch details from eCourts</div>
+
+    <div class="form-group">
+      <label class="form-label">CNR Number</label>
+      <input type="text" class="form-input mono" id="cnrInput" placeholder="KLML120002992024" maxlength="16" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Client Name</label>
+        <input type="text" class="form-input" id="clientName" placeholder="Mohammed Salim">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Client Phone</label>
+        <input type="text" class="form-input mono" id="clientPhone" placeholder="+91 9876543210">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes (optional)</label>
+      <input type="text" class="form-input" id="caseNotes" placeholder="Property dispute, land boundary…">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-gold" onclick="addCase()">Fetch from eCourts →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ════════════════════════════════════════════════ -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toastIcon">✓</span>
+  <span id="toastMsg">Done</span>
+</div>
+
+<!-- ══ JAVASCRIPT ════════════════════════════════════════════ -->
+<script>
+// ── DATA ─────────────────────────────────────────────────────
+const CASES = [
+  {
+    id: 1,
+    cnr: "KLML120002992024",
+    title: "Mohammed Salim v. Kerala State Housing Board",
+    caseType: "Civil — Property Dispute",
+    filingNo: "OS/299/2024",
+    court: "Malappuram District Court",
+    courtNo: "Court No. 3",
+    judge: "Hon. B. Krishnamurthy",
+    petitioner: "Mohammed Salim K.P.",
+    respondent: "Kerala State Housing Board",
+    petAdv: "Adv. Anitha Mohan",
+    resAdv: "Adv. State Counsel",
+    nextDate: "2025-05-05",
+    nextDateStr: "5 May 2025",
+    status: "Hearing",
+    stage: "Arguments — Petitioner",
+    urgent: true,
+    client: "M. Salim",
+    clientPhone: "+91 9876543210",
+    tags: ["Property", "Stay Order Active", "eCourts Synced"],
+    history: [
+      { date: "12 Nov 2024", event: "Suit filed — OS 299/2024", note: "Stay of dispossession granted", type: "done" },
+      { date: "10 Jan 2025", event: "First hearing — Notice issued", note: "Respondent directed to file reply in 8 weeks", type: "done" },
+      { date: "5 Mar 2025", event: "Reply filed by respondent", note: "Petitioner directed to file rejoinder", type: "done" },
+      { date: "20 Apr 2025", event: "Rejoinder filed", note: "Case posted for petitioner arguments", type: "done" },
+      { date: "5 May 2025", event: "Arguments — Petitioner's turn", note: "Client notified via WhatsApp", type: "next" },
+      { date: "TBD", event: "Respondent arguments + final order", note: "", type: "future" }
+    ]
+  },
+  {
+    id: 2,
+    cnr: "KLML120004152024",
+    title: "Fathima Beevi v. State of Kerala",
+    caseType: "Criminal — Bail Application",
+    filingNo: "BA/415/2024",
+    court: "Kerala High Court",
+    courtNo: "Court No. 7",
+    judge: "Hon. Justice R. Narayana",
+    petitioner: "Fathima Beevi P.K.",
+    respondent: "State of Kerala",
+    petAdv: "Adv. Anitha Mohan",
+    resAdv: "Adv. Public Prosecutor",
+    nextDate: "2025-05-08",
+    nextDateStr: "8 May 2025",
+    status: "Reserved",
+    stage: "Judgment Reserved",
+    urgent: true,
+    client: "F. Beevi",
+    clientPhone: "+91 9845671230",
+    tags: ["Criminal", "Bail", "Judgment Reserved"],
+    history: [
+      { date: "5 Dec 2024", event: "Bail application filed", note: "Matter listed before vacation bench", type: "done" },
+      { date: "18 Dec 2024", event: "First hearing", note: "State to file objection", type: "done" },
+      { date: "15 Jan 2025", event: "State objection filed", note: "Arguments heard, order reserved", type: "done" },
+      { date: "8 May 2025", event: "Order pronounced", note: "Judgment reserved — attending advocate essential", type: "next" }
+    ]
+  },
+  {
+    id: 3,
+    cnr: "KLML120001882024",
+    title: "Rajan K.V. v. Suresh T.K.",
+    caseType: "Civil — Money Recovery",
+    filingNo: "OS/188/2024",
+    court: "Munsiff Court Malappuram",
+    courtNo: "Court No. 1",
+    judge: "Hon. A. Sreedharan",
+    petitioner: "Rajan K.V.",
+    respondent: "Suresh T.K.",
+    petAdv: "Adv. Anitha Mohan",
+    resAdv: "Adv. P. Raveendran",
+    nextDate: "2025-05-14",
+    nextDateStr: "14 May 2025",
+    status: "Hearing",
+    stage: "Evidence Stage",
+    urgent: false,
+    client: "R. K.V.",
+    clientPhone: "+91 9746123450",
+    tags: ["Civil", "Money Recovery", "Evidence"],
+    history: [
+      { date: "3 Sep 2024", event: "Plaint filed", note: "₹4.5L recovery + interest", type: "done" },
+      { date: "28 Oct 2024", event: "Summons issued to defendant", note: "Defendant appeared through counsel", type: "done" },
+      { date: "12 Dec 2024", event: "Written statement filed", note: "Issues framed", type: "done" },
+      { date: "14 May 2025", event: "Plaintiff evidence", note: "PW1 to be examined", type: "next" },
+      { date: "TBD", event: "Defendant evidence + arguments", note: "", type: "future" }
+    ]
+  },
+  {
+    id: 4,
+    cnr: "KLML120003762024",
+    title: "Kerala Gramin Bank v. Abdul Razak",
+    caseType: "Civil — Recovery Execution",
+    filingNo: "EP/376/2024",
+    court: "Malappuram District Court",
+    courtNo: "Court No. 2",
+    judge: "Hon. S. Menon",
+    petitioner: "Kerala Gramin Bank",
+    respondent: "Abdul Razak M.",
+    petAdv: "Adv. Anitha Mohan",
+    resAdv: "—",
+    nextDate: "2025-05-19",
+    nextDateStr: "19 May 2025",
+    status: "Notice Issued",
+    stage: "Execution Petition",
+    urgent: false,
+    client: "KGB",
+    clientPhone: "+91 9400123456",
+    tags: ["Execution", "Bank Recovery"],
+    history: [
+      { date: "1 Feb 2025", event: "Execution petition filed", note: "Decree passed in EP/122/2023", type: "done" },
+      { date: "18 Mar 2025", event: "Notice issued to JD", note: "Service pending confirmation", type: "done" },
+      { date: "19 May 2025", event: "Return of notice / next steps", note: "", type: "next" }
+    ]
+  },
+  {
+    id: 5,
+    cnr: "KLML120000932023",
+    title: "Nair v. Nair (Family Court)",
+    caseType: "Family — Divorce Petition",
+    filingNo: "OP(FC)/93/2023",
+    court: "Family Court Malappuram",
+    courtNo: "Family Court",
+    judge: "Hon. P. Latha",
+    petitioner: "Priya Nair",
+    respondent: "Arun Nair",
+    petAdv: "Adv. Anitha Mohan",
+    resAdv: "Adv. V. Nambiar",
+    nextDate: "2025-05-22",
+    nextDateStr: "22 May 2025",
+    status: "Hearing",
+    stage: "Settlement Talks",
+    urgent: false,
+    client: "P. Nair",
+    clientPhone: "+91 9745623410",
+    tags: ["Family", "Divorce", "Settlement"],
+    history: [
+      { date: "14 Aug 2023", event: "Petition filed", note: "Mutual consent not established", type: "done" },
+      { date: "20 Oct 2023", event: "Mediation referred", note: "Both parties directed to mediation centre", type: "done" },
+      { date: "8 Jan 2024", event: "Mediation failed", note: "Parties to proceed on contest", type: "done" },
+      { date: "15 Sep 2024", event: "Evidence commenced", note: "PW1 (petitioner) examined", type: "done" },
+      { date: "22 May 2025", event: "RW1 cross-examination", note: "Possible settlement — both parties open", type: "next" }
+    ]
+  }
+];
+
+let selectedCase = null;
+let currentFilter = 'all';
+
+// ── RENDER TABLE ─────────────────────────────────────────────
+function renderTable(cases) {
+  const body = document.getElementById('tableBody');
+  body.innerHTML = '';
+
+  if (cases.length === 0) {
+    body.innerHTML = `<div style="padding:32px;text-align:center;color:var(--text3);font-size:13px;">No cases found</div>`;
+    return;
+  }
+
+  cases.forEach(c => {
+    const row = document.createElement('div');
+    row.className = 'table-row' + (selectedCase?.id === c.id ? ' selected' : '');
+    row.onclick = () => selectCase(c);
+
+    const daysLeft = getDaysLeft(c.nextDate);
+    const dateClass = daysLeft <= 2 ? 'td urgent' : 'td';
+
+    row.innerHTML = `
+      <div>
+        <div class="case-title-text">${c.urgent ? '<span class="urgent-blink"></span>' : ''}${c.title}</div>
+        <div class="case-sub">${c.cnr} · ${c.caseType.split('—')[0].trim()}</div>
+      </div>
+      <div class="${dateClass}" style="font-size:11px;">${c.court.replace('Malappuram ','').replace('Kerala ','')}</div>
+      <div class="${dateClass}">${c.nextDateStr}</div>
+      <div><span class="badge ${badgeClass(c.status)}">${c.status}</span></div>
+      <div class="td">${c.client}</div>
+    `;
+    body.appendChild(row);
+  });
+}
+
+function badgeClass(status) {
+  if (status === 'Hearing') return 'badge-hearing';
+  if (status === 'Reserved') return 'badge-reserved';
+  if (status === 'Notice Issued') return 'badge-notice';
+  if (status === 'Disposed') return 'badge-disposed';
+  return 'badge-hearing';
+}
+
+function getDaysLeft(dateStr) {
+  const d = new Date(dateStr);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  return Math.ceil((d - today) / 86400000);
+}
+
+// ── SELECT CASE ───────────────────────────────────────────────
+function selectCase(c) {
+  selectedCase = c;
+
+  // Update detail panel
+  document.getElementById('detailName').textContent = c.title;
+  document.getElementById('detailMeta').innerHTML = `
+    <span>${c.court}</span> · ${c.courtNo}<br>
+    Judge: <span>${c.judge}</span><br>
+    Filing: <span class="mono">${c.filingNo}</span>
+  `;
+
+  // Tags
+  const tagsEl = document.getElementById('detailTags');
+  tagsEl.innerHTML = c.tags.map((t,i) =>
+    `<span class="tag ${i===0?'gold':''}">${t}</span>`
+  ).join('');
+
+  // Info grid
+  document.getElementById('detailInfo').innerHTML = `
+    <div class="info-item"><div class="info-key">Petitioner</div><div class="info-val">${c.petitioner}</div></div>
+    <div class="info-item"><div class="info-key">Respondent</div><div class="info-val">${c.respondent}</div></div>
+    <div class="info-item"><div class="info-key">Pet. Advocate</div><div class="info-val">${c.petAdv}</div></div>
+    <div class="info-item"><div class="info-key">Res. Advocate</div><div class="info-val">${c.resAdv}</div></div>
+    <div class="info-item"><div class="info-key">Next Hearing</div><div class="info-val" style="color:var(--gold)">${c.nextDateStr}</div></div>
+    <div class="info-item"><div class="info-key">Stage</div><div class="info-val">${c.stage}</div></div>
+  `;
+
+  // Timeline
+  const tlEl = document.getElementById('detailTimeline');
+  tlEl.innerHTML = c.history.map(h => `
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot ${h.type}"></div>
+        <div class="tl-line"></div>
+      </div>
+      <div class="tl-right">
+        <div class="tl-date ${h.type === 'next' ? 'next-date' : ''}">${h.date}${h.type === 'next' ? ' · NEXT HEARING' : ''}</div>
+        <div class="tl-event">${h.event}</div>
+        ${h.note ? `<div class="tl-note">${h.note}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  // Notify section
+  document.getElementById('notifySection').style.display = 'block';
+  document.getElementById('notifyClient').innerHTML = `Client: <strong>${c.petitioner}</strong> · ${c.clientPhone}`;
+
+  // Re-render table to show selection
+  renderTable(getFilteredCases());
+}
+
+// ── FILTER ────────────────────────────────────────────────────
+function getFilteredCases() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const weekEnd = new Date(today); weekEnd.setDate(weekEnd.getDate() + 7);
+  if (currentFilter === 'urgent') return CASES.filter(c => c.urgent);
+  if (currentFilter === 'week') return CASES.filter(c => { const d = new Date(c.nextDate); return d >= today && d <= weekEnd; });
+  if (currentFilter === 'disposed') return CASES.filter(c => c.status === 'Disposed');
+  return CASES;
+}
+
+function filterCases(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  const filtered = getFilteredCases();
+  document.getElementById('tableTitle').textContent = { all:'All Cases', urgent:'Urgent Cases', week:'This Week', disposed:'Disposed Cases' }[filter];
+  renderTable(filtered);
+}
+
+function searchCases(query) {
+  if (!query) { renderTable(getFilteredCases()); return; }
+  const q = query.toLowerCase();
+  const filtered = CASES.filter(c =>
+    c.cnr.toLowerCase().includes(q) ||
+    c.title.toLowerCase().includes(q) ||
+    c.petitioner.toLowerCase().includes(q) ||
+    c.client.toLowerCase().includes(q)
+  );
+  renderTable(filtered);
+}
+
+// ── MODAL ─────────────────────────────────────────────────────
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('cnrInput').focus(), 200);
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function addCase() {
+  const cnr = document.getElementById('cnrInput').value.trim();
+  const client = document.getElementById('clientName').value.trim();
+  const phone = document.getElementById('clientPhone').value.trim();
+
+  if (!cnr || cnr.length < 10) { showToast('⚠ Enter a valid CNR number', '#e0a050'); return; }
+  if (!client) { showToast('⚠ Enter client name', '#e0a050'); return; }
+
+  closeModal();
+  showToast(`⟳ Fetching ${cnr} from eCourts…`, '#c9a84c');
+  setTimeout(() => showToast(`✓ Case added: ${cnr}`, '#4a7c59'), 3000);
+}
+
+// ── NOTIFICATIONS ─────────────────────────────────────────────
+function sendNotif(channel) {
+  if (!selectedCase) return;
+  showToast(`✓ ${channel} sent to ${selectedCase.petitioner}`, '#4a7c59');
+}
+
+function resendNotif() {
+  document.getElementById('alertBanner').style.display = 'none';
+  showToast('✓ Reminder resent to Mohammed Salim via WhatsApp', '#4a7c59');
+}
+
+// ── SYNC ──────────────────────────────────────────────────────
+function triggerSync() {
+  showToast('⟳ Syncing with eCourts Malappuram…', '#c9a84c');
+  const el = document.getElementById('syncTime');
+  setTimeout(() => {
+    const now = new Date();
+    el.textContent = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    showToast('✓ All cases synced successfully', '#4a7c59');
+  }, 2000);
+}
+
+// ── EXPORT ────────────────────────────────────────────────────
+function exportData() {
+  const headers = ['CNR','Title','Court','Next Date','Status','Client'];
+  const rows = CASES.map(c => [c.cnr, c.title, c.court, c.nextDateStr, c.status, c.petitioner]);
+  const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'nyaytrack_cases.csv';
+  a.click();
+  showToast('✓ Exported as CSV', '#4a7c59');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, color = '#4a7c59') {
+  clearTimeout(toastTimer);
+  const t = document.getElementById('toast');
+  const m = document.getElementById('toastMsg');
+  m.textContent = msg;
+  t.style.borderColor = color;
+  t.classList.add('show');
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  renderTable(CASES);
+  // Auto-select first case
+  setTimeout(() => selectCase(CASES[0]), 200);
+
+  // Set sync time to now
+  const now = new Date();
+  document.getElementById('syncTime').textContent =
+    now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+});
+
+// Keyboard shortcut
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.querySelector('.search-box input').focus();
+  }
+});
+</script>
+</body>
+</html>
