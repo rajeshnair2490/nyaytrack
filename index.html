@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -80,346 +80,187 @@ body {
 }
 
 /* ── LAYOUT: DESKTOP SIDEBAR ───────────────────────────── */
-.app-shell {
-  display: flex;
-  min-height: 100vh;
-}
-
+.app-shell { display: flex; min-height: 100vh; }
 .sidebar {
-  width: 230px;
-  flex-shrink: 0;
-  background: var(--bg);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  overflow-y: auto;
+  width: 230px; flex-shrink: 0;
+  background: var(--bg); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  height: 100vh; position: sticky; top: 0; overflow-y: auto;
 }
-
-.main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
 /* ── LOGO ──────────────────────────────────────────────── */
-.logo-area {
-  padding: 20px 18px 16px;
-  border-bottom: 1px solid var(--border);
-}
+.logo-area { padding: 20px 18px 16px; border-bottom: 1px solid var(--border); }
 .logo {
-  font-family: 'Lora', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-family: 'Lora', serif; font-size: 20px; font-weight: 700; color: var(--accent);
+  display: flex; align-items: center; gap: 8px;
 }
 .logo-icon {
-  width: 28px; height: 28px;
-  background: var(--accent);
-  border-radius: 7px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
-  color: white;
-  flex-shrink: 0;
+  width: 28px; height: 28px; background: var(--accent); border-radius: 7px;
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+  color: white; flex-shrink: 0;
 }
 .logo-sub { font-size: 11px; color: var(--text3); margin-top: 3px; font-weight: 500; }
 .sync-pill {
-  display: inline-flex; align-items: center; gap: 5px;
-  margin-top: 10px;
-  background: var(--green-bg);
-  border: 1px solid var(--green-bd);
-  border-radius: 20px;
-  padding: 4px 10px;
-  cursor: pointer;
-  transition: opacity 0.2s;
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 10px;
+  background: var(--green-bg); border: 1px solid var(--green-bd);
+  border-radius: 20px; padding: 4px 10px; cursor: pointer; transition: opacity 0.2s;
 }
 .sync-pill:hover { opacity: 0.8; }
 .sync-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 .sync-text { font-size: 11px; color: var(--green); font-weight: 600; }
 
+/* ── LANG SWITCHER ─────────────────────────────────────── */
+.lang-switcher {
+  display: flex; gap: 4px;
+  padding: 10px 18px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.lang-btn {
+  flex: 1; font-size: 11px; font-weight: 700;
+  padding: 5px 4px; border-radius: 7px;
+  border: 1px solid var(--border2);
+  cursor: pointer; background: var(--bg2); color: var(--text3);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.12s; text-align: center;
+}
+.lang-btn.active { background: var(--accent-bg); color: var(--accent); border-color: var(--accent-border); }
+.lang-btn:hover:not(.active) { background: var(--bg3); color: var(--text2); }
+
 /* ── NAV ──────────────────────────────────────────────── */
 .nav-group { padding: 14px 10px 2px; }
-.nav-group-label {
-  font-size: 10px; font-weight: 700;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  padding: 0 8px;
-  margin-bottom: 3px;
-}
+.nav-group-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.09em; padding: 0 8px; margin-bottom: 3px; }
 .nav-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px 8px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
-  color: var(--text2);
-  font-weight: 400;
-  transition: all 0.12s;
-  margin-bottom: 1px;
+  display: flex; align-items: center; gap: 9px; padding: 8px 8px;
+  border-radius: 8px; cursor: pointer; font-size: 13px; color: var(--text2);
+  font-weight: 400; transition: all 0.12s; margin-bottom: 1px;
 }
 .nav-item:hover { background: var(--bg2); color: var(--text); }
 .nav-item.active { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
 .nav-icon { font-size: 15px; width: 18px; text-align: center; opacity: 0.7; }
 .nav-item.active .nav-icon { opacity: 1; }
 .nav-badge {
-  margin-left: auto;
-  font-size: 10px; font-weight: 600;
-  background: var(--bg3);
-  color: var(--text3);
-  border-radius: 10px;
-  padding: 1px 7px;
-  min-width: 20px;
-  text-align: center;
+  margin-left: auto; font-size: 10px; font-weight: 600;
+  background: var(--bg3); color: var(--text3);
+  border-radius: 10px; padding: 1px 7px; min-width: 20px; text-align: center;
 }
 .nav-badge.red { background: var(--red-bg); color: var(--red-text); border: 1px solid var(--red-bd); }
 
 .sidebar-footer {
-  margin-top: auto;
-  padding: 14px 16px;
+  margin-top: auto; padding: 14px 16px;
   border-top: 1px solid var(--border);
   display: flex; align-items: center; gap: 10px;
 }
 .avatar {
   width: 32px; height: 32px; border-radius: 50%;
-  background: var(--accent-bg);
-  border: 1.5px solid var(--accent-border);
+  background: var(--accent-bg); border: 1.5px solid var(--accent-border);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Lora', serif;
-  font-size: 13px; font-weight: 700;
-  color: var(--accent);
-  flex-shrink: 0;
+  font-family: 'Lora', serif; font-size: 13px; font-weight: 700;
+  color: var(--accent); flex-shrink: 0;
 }
 .footer-name { font-size: 12px; font-weight: 600; color: var(--text); }
 .footer-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
 
 /* ── MOBILE HEADER ─────────────────────────────────────── */
 .mobile-header {
-  display: none;
-  position: sticky; top: 0; z-index: 50;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 16px;
-  align-items: center;
-  justify-content: space-between;
+  display: none; position: sticky; top: 0; z-index: 50;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  padding: 12px 16px; align-items: center; justify-content: space-between;
   box-shadow: var(--shadow-sm);
 }
 .mobile-logo {
-  font-family: 'Lora', serif;
-  font-size: 18px; font-weight: 700;
-  color: var(--accent);
-  display: flex; align-items: center; gap: 7px;
+  font-family: 'Lora', serif; font-size: 18px; font-weight: 700;
+  color: var(--accent); display: flex; align-items: center; gap: 7px;
 }
 .hamburger {
-  width: 36px; height: 36px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  color: var(--text2);
+  width: 36px; height: 36px; background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px; color: var(--text2);
 }
 
 /* ── MOBILE DRAWER ─────────────────────────────────────── */
 .drawer-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 100;
-  opacity: 0;
-  transition: opacity 0.25s;
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+  z-index: 100; opacity: 0; transition: opacity 0.25s;
 }
 .drawer-overlay.open { opacity: 1; }
 .drawer {
-  position: fixed; top: 0; left: 0; bottom: 0;
-  width: 260px;
-  background: var(--bg);
-  z-index: 101;
-  transform: translateX(-100%);
-  transition: transform 0.28s ease;
-  display: flex; flex-direction: column;
-  overflow-y: auto;
+  position: fixed; top: 0; left: 0; bottom: 0; width: 260px;
+  background: var(--bg); z-index: 101; transform: translateX(-100%);
+  transition: transform 0.28s ease; display: flex; flex-direction: column; overflow-y: auto;
 }
 .drawer.open { transform: none; }
 .drawer-close {
-  position: absolute; top: 14px; right: 14px;
-  width: 28px; height: 28px;
-  background: var(--bg3);
-  border-radius: 50%;
+  position: absolute; top: 14px; right: 14px; width: 28px; height: 28px;
+  background: var(--bg3); border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  font-size: 14px; color: var(--text2);
-  border: 1px solid var(--border);
+  cursor: pointer; font-size: 14px; color: var(--text2); border: 1px solid var(--border);
 }
 
 /* ── TOPBAR ────────────────────────────────────────────── */
 .topbar {
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  padding: 14px 24px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
 }
-.page-title {
-  font-family: 'Lora', serif;
-  font-size: 18px; font-weight: 700;
-  color: var(--text);
-  flex: 1;
-  min-width: 120px;
-}
-.topbar-actions {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-}
+.page-title { font-family: 'Lora', serif; font-size: 18px; font-weight: 700; color: var(--text); flex: 1; min-width: 120px; }
+.topbar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .search-wrap {
   display: flex; align-items: center; gap: 7px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 7px 11px;
-  width: 210px;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 7px 11px; width: 210px; transition: border-color 0.15s, box-shadow 0.15s;
 }
-.search-wrap:focus-within {
-  border-color: var(--accent-border);
-  box-shadow: 0 0 0 3px var(--accent-bg);
-}
-.search-wrap input {
-  background: none; border: none; outline: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 13px; color: var(--text); width: 100%;
-}
+.search-wrap:focus-within { border-color: var(--accent-border); box-shadow: 0 0 0 3px var(--accent-bg); }
+.search-wrap input { background: none; border: none; outline: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; color: var(--text); width: 100%; }
 .search-wrap input::placeholder { color: var(--text3); }
 .search-icon { color: var(--text3); font-size: 14px; flex-shrink: 0; }
 
 .btn {
-  font-size: 12px; font-weight: 600;
-  padding: 7px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--border2);
-  cursor: pointer;
-  background: var(--bg);
-  color: var(--text2);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  transition: all 0.12s;
-  white-space: nowrap;
+  font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 8px;
+  border: 1px solid var(--border2); cursor: pointer; background: var(--bg); color: var(--text2);
+  font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.12s; white-space: nowrap;
 }
 .btn:hover { background: var(--bg2); color: var(--text); border-color: var(--border2); }
-.btn-primary {
-  background: var(--accent);
-  color: white; border-color: var(--accent);
-}
+.btn-primary { background: var(--accent); color: white; border-color: var(--accent); }
 .btn-primary:hover { background: var(--accent2); color: white; }
 
 /* ── CONTENT AREA ──────────────────────────────────────── */
-.content {
-  padding: 20px 24px;
-  flex: 1;
-}
+.content { padding: 20px 24px; flex: 1; }
 
 /* ── STATS ─────────────────────────────────────────────── */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 18px;
-}
-.stat-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  box-shadow: var(--shadow-sm);
-}
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.stat-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow-sm); }
 .stat-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
-.stat-val {
-  font-family: 'Lora', serif;
-  font-size: 28px; font-weight: 700;
-  color: var(--text);
-  margin: 4px 0 2px;
-  line-height: 1;
-}
+.stat-val { font-family: 'Lora', serif; font-size: 28px; font-weight: 700; color: var(--text); margin: 4px 0 2px; line-height: 1; }
 .stat-card.accent .stat-val { color: var(--accent); }
 .stat-sub { font-size: 11px; color: var(--text3); }
 
 /* ── ALERT ─────────────────────────────────────────────── */
 .alert {
-  background: var(--red-bg);
-  border: 1px solid var(--red-bd);
-  border-radius: var(--radius);
-  padding: 11px 14px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 18px;
+  background: var(--red-bg); border: 1px solid var(--red-bd); border-radius: var(--radius);
+  padding: 11px 14px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 18px;
 }
 .alert-dot { width: 8px; height: 8px; background: var(--red); border-radius: 50%; margin-top: 4px; flex-shrink: 0; animation: pulse 1.5s infinite; }
 .alert-body { flex: 1; font-size: 12px; color: var(--text2); line-height: 1.5; }
 .alert-body strong { color: var(--text); font-weight: 600; }
-.alert-btn {
-  font-size: 11px; font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 7px;
-  border: 1px solid var(--red-bd);
-  background: var(--red-bg);
-  color: var(--red-text);
-  cursor: pointer;
-  flex-shrink: 0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  transition: all 0.12s;
-}
+.alert-btn { font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 7px; border: 1px solid var(--red-bd); background: var(--red-bg); color: var(--red-text); cursor: pointer; flex-shrink: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.12s; }
 .alert-btn:hover { background: var(--red); color: white; }
 
 /* ── TWO-PANEL LAYOUT ──────────────────────────────────── */
-.panels {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 16px;
-  align-items: start;
-}
+.panels { display: grid; grid-template-columns: 1fr 300px; gap: 16px; align-items: start; }
 
 /* ── CASES TABLE ────────────────────────────────────────── */
-.card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-}
-.card-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg2);
-}
+.card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; }
+.card-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--bg2); }
 .card-title { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; }
 
-.table-head {
-  display: grid;
-  grid-template-columns: 2fr 1.2fr 0.9fr 1fr 0.8fr;
-  padding: 9px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg2);
-}
+.table-head { display: grid; grid-template-columns: 2fr 1.2fr 0.9fr 1fr 0.8fr; padding: 9px 16px; border-bottom: 1px solid var(--border); background: var(--bg2); }
 .th { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; }
 
 .trow {
-  display: grid;
-  grid-template-columns: 2fr 1.2fr 0.9fr 1fr 0.8fr;
-  padding: 11px 16px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  transition: background 0.1s;
-  align-items: center;
+  display: grid; grid-template-columns: 2fr 1.2fr 0.9fr 1fr 0.8fr;
+  padding: 11px 16px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.1s; align-items: center;
 }
 .trow:last-child { border-bottom: none; }
 .trow:hover { background: var(--bg2); }
@@ -431,12 +272,7 @@ body {
 .td { font-size: 12px; color: var(--text2); }
 .td.hot { color: var(--red); font-weight: 700; }
 
-.badge {
-  display: inline-flex; align-items: center;
-  padding: 3px 9px;
-  border-radius: 20px;
-  font-size: 11px; font-weight: 700;
-}
+.badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; }
 .b-hearing { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-border); }
 .b-reserved { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-bd); }
 .b-notice { background: var(--red-bg); color: var(--red-text); border: 1px solid var(--red-bd); }
@@ -446,37 +282,20 @@ body {
 
 /* ── DETAIL PANEL ───────────────────────────────────────── */
 .detail-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  position: sticky;
-  top: 20px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+  overflow: hidden; position: sticky; top: 20px;
 }
 .detail-top {
-  padding: 16px;
-  border-bottom: 1px solid var(--border);
+  padding: 16px; border-bottom: 1px solid var(--border);
   background: linear-gradient(135deg, var(--accent-bg) 0%, var(--bg) 100%);
 }
-.detail-name {
-  font-family: 'Lora', serif;
-  font-size: 15px; font-weight: 700;
-  color: var(--text);
-  line-height: 1.4;
-  margin-bottom: 5px;
-}
+.detail-name { font-family: 'Lora', serif; font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: 5px; }
 .detail-sub { font-size: 11px; color: var(--text3); line-height: 1.7; }
 .detail-sub span { color: var(--text2); font-weight: 500; }
 
 .tags { display: flex; flex-wrap: wrap; gap: 5px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
-.tag {
-  font-size: 10px; font-weight: 700;
-  padding: 3px 8px; border-radius: 6px;
-  background: var(--bg2); color: var(--text3);
-  border: 1px solid var(--border);
-  text-transform: uppercase; letter-spacing: 0.04em;
-}
+.tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--bg2); color: var(--text3); border: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.04em; }
 .tag.blue { background: var(--accent-bg); color: var(--accent); border-color: var(--accent-border); }
 
 .detail-section { padding: 12px 16px; border-bottom: 1px solid var(--border); }
@@ -487,6 +306,23 @@ body {
 .info-item .ik { font-size: 10px; color: var(--text3); margin-bottom: 2px; }
 .info-item .iv { font-size: 12px; font-weight: 600; color: var(--text); }
 .iv.accent { color: var(--accent); }
+
+/* ── CORRESPONDENT COUNSEL ──────────────────────────────── */
+.counsel-box {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 10px 12px; margin-top: 8px;
+}
+.counsel-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.counsel-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.counsel-bar { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.counsel-phone {
+  font-size: 11px; font-weight: 600; color: var(--accent); flex-shrink: 0;
+  background: var(--accent-bg); border: 1px solid var(--accent-border);
+  border-radius: 6px; padding: 3px 8px; cursor: pointer;
+  transition: all 0.12s; text-decoration: none;
+}
+.counsel-phone:hover { background: var(--accent); color: white; }
+.counsel-type { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
 
 /* ── TIMELINE ───────────────────────────────────────────── */
 .tl { padding: 2px 0; }
@@ -505,33 +341,68 @@ body {
 .tl-ev { font-size: 12px; font-weight: 600; color: var(--text); margin-top: 1px; }
 .tl-note { font-size: 11px; color: var(--text3); margin-top: 1px; line-height: 1.4; }
 
-/* ── NOTIFY ─────────────────────────────────────────────── */
+/* ── NOTIFY / WHATSAPP TEMPLATES ────────────────────────── */
 .notify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .nbtn {
-  font-size: 12px; font-weight: 600;
-  padding: 9px 10px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  background: var(--bg2);
-  color: var(--text2);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  transition: all 0.12s;
+  font-size: 12px; font-weight: 600; padding: 9px 10px; border-radius: 8px;
+  border: 1px solid var(--border); cursor: pointer; background: var(--bg2); color: var(--text2);
+  font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.12s;
   display: flex; align-items: center; gap: 6px;
 }
 .nbtn:hover { background: var(--accent-bg); border-color: var(--accent-border); color: var(--accent); }
 .nbtn.wa:hover { background: #e8faf0; border-color: #6fcf97; color: #1e8449; }
 
+/* WhatsApp Template Modal */
+.wa-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  display: flex; align-items: flex-end; justify-content: center;
+  z-index: 400; opacity: 0; pointer-events: none; transition: opacity 0.2s; padding: 0;
+}
+.wa-modal-overlay.open { opacity: 1; pointer-events: all; }
+@media (min-width: 600px) { .wa-modal-overlay { align-items: center; padding: 20px; } }
+.wa-modal {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 18px 18px 0 0; padding: 20px; width: 100%; max-width: 480px;
+  transform: translateY(40px); transition: transform 0.25s ease;
+  box-shadow: var(--shadow); max-height: 90vh; overflow-y: auto;
+}
+@media (min-width: 600px) { .wa-modal { border-radius: var(--radius-lg); transform: translateY(10px); } }
+.wa-modal-overlay.open .wa-modal { transform: none; }
+.wa-modal-title { font-family: 'Lora', serif; font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.wa-modal-sub { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
+
+.wa-template-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.wa-template {
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  cursor: pointer; transition: border-color 0.15s;
+}
+.wa-template:hover { border-color: var(--accent-border); }
+.wa-template.selected { border-color: var(--green); }
+.wa-tpl-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; background: var(--bg2); border-bottom: 1px solid var(--border);
+}
+.wa-tpl-label { font-size: 11px; font-weight: 700; color: var(--text2); }
+.wa-tpl-radio { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border2); flex-shrink: 0; transition: all 0.12s; }
+.wa-template.selected .wa-tpl-radio { border-color: var(--green); background: var(--green); }
+.wa-tpl-body { padding: 10px 12px; font-size: 12px; color: var(--text); line-height: 1.7; white-space: pre-wrap; font-family: 'Plus Jakarta Sans', sans-serif; }
+.wa-tpl-body .ml-text { font-size: 13px; color: var(--text); }
+.wa-tpl-body .en-text { font-size: 11px; color: var(--text3); margin-top: 4px; font-style: italic; }
+
+.wa-preview {
+  background: #e8faf0; border: 1px solid #a8d5bb; border-radius: 10px;
+  padding: 12px; margin-bottom: 14px; font-size: 12px; color: #1e4d2e;
+  line-height: 1.7; white-space: pre-wrap; display: none;
+}
+.wa-preview.show { display: block; }
+
+.wa-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
 /* ── MOBILE CARDS VIEW ─────────────────────────────────── */
 .mobile-cases { display: none; flex-direction: column; gap: 10px; margin-bottom: 16px; }
 .case-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 13px 15px;
-  cursor: pointer;
-  transition: all 0.12s;
-  box-shadow: var(--shadow-sm);
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 13px 15px; cursor: pointer; transition: all 0.12s; box-shadow: var(--shadow-sm);
 }
 .case-card:hover, .case-card.sel { border-color: var(--accent-border); background: var(--accent-bg); }
 .cc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
@@ -543,93 +414,38 @@ body {
 .cc-date.hot { color: var(--red); }
 
 /* ── MOBILE DETAIL SHEET ───────────────────────────────── */
-.sheet-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 200;
-  opacity: 0;
-  transition: opacity 0.25s;
-}
+.sheet-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; opacity: 0; transition: opacity 0.25s; }
 .sheet-overlay.open { opacity: 1; }
 .sheet {
-  position: fixed; left: 0; right: 0; bottom: 0;
-  background: var(--bg);
-  border-radius: 18px 18px 0 0;
-  max-height: 85vh;
-  overflow-y: auto;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-  z-index: 201;
-  padding-bottom: env(safe-area-inset-bottom, 16px);
+  position: fixed; left: 0; right: 0; bottom: 0; background: var(--bg);
+  border-radius: 18px 18px 0 0; max-height: 85vh; overflow-y: auto;
+  transform: translateY(100%); transition: transform 0.3s ease;
+  z-index: 201; padding-bottom: env(safe-area-inset-bottom, 16px);
 }
 .sheet.open { transform: none; }
-.sheet-handle {
-  width: 36px; height: 4px;
-  background: var(--border2);
-  border-radius: 2px;
-  margin: 10px auto 0;
-}
-.sheet-close {
-  position: absolute; top: 14px; right: 16px;
-  width: 28px; height: 28px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  font-size: 13px; color: var(--text2);
-}
+.sheet-handle { width: 36px; height: 4px; background: var(--border2); border-radius: 2px; margin: 10px auto 0; }
+.sheet-close { position: absolute; top: 14px; right: 16px; width: 28px; height: 28px; background: var(--bg3); border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: var(--text2); }
 
 /* ── MODAL ─────────────────────────────────────────────── */
 .modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(3px);
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(3px);
   display: flex; align-items: flex-end; justify-content: center;
-  z-index: 300;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.2s;
-  padding: 0;
+  z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.2s; padding: 0;
 }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
-
-@media (min-width: 600px) {
-  .modal-overlay { align-items: center; padding: 20px; }
-}
-
+@media (min-width: 600px) { .modal-overlay { align-items: center; padding: 20px; } }
 .modal {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 18px 18px 0 0;
-  padding: 24px 20px;
-  width: 100%;
-  max-width: 440px;
-  transform: translateY(40px);
-  transition: transform 0.25s ease;
-  box-shadow: var(--shadow);
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 18px 18px 0 0; padding: 24px 20px; width: 100%; max-width: 440px;
+  transform: translateY(40px); transition: transform 0.25s ease; box-shadow: var(--shadow);
 }
-@media (min-width: 600px) {
-  .modal { border-radius: var(--radius-lg); transform: translateY(10px); }
-}
+@media (min-width: 600px) { .modal { border-radius: var(--radius-lg); transform: translateY(10px); } }
 .modal-overlay.open .modal { transform: none; }
 .modal-title { font-family: 'Lora', serif; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
 .modal-sub { font-size: 12px; color: var(--text3); margin-bottom: 20px; }
 .form-group { margin-bottom: 14px; }
 .form-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; display: block; }
-.form-input {
-  width: 100%;
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 13px; font-weight: 500;
-  color: var(--text);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  -webkit-appearance: none;
-}
+.form-input { width: 100%; background: var(--bg2); border: 1px solid var(--border2); border-radius: 8px; padding: 10px 12px; font-size: 13px; font-weight: 500; color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; outline: none; transition: border-color 0.15s, box-shadow 0.15s; -webkit-appearance: none; }
 .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
 .form-input::placeholder { color: var(--text3); font-weight: 400; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -638,16 +454,9 @@ body {
 /* ── TOAST ─────────────────────────────────────────────── */
 .toast {
   position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(60px);
-  background: var(--text);
-  color: var(--bg);
-  border-radius: 30px;
-  padding: 10px 18px;
-  font-size: 13px; font-weight: 600;
-  z-index: 500;
-  opacity: 0;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  box-shadow: var(--shadow);
+  background: var(--text); color: var(--bg); border-radius: 30px;
+  padding: 10px 18px; font-size: 13px; font-weight: 600; z-index: 500;
+  opacity: 0; transition: all 0.3s ease; white-space: nowrap; box-shadow: var(--shadow);
 }
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
@@ -662,26 +471,20 @@ body {
 @media (max-width: 768px) {
   .sidebar { display: none; }
   .mobile-header { display: flex; }
-
   .topbar { padding: 10px 16px; }
   .page-title { font-size: 16px; }
   .search-wrap { width: 100%; order: 10; flex-basis: 100%; }
   .topbar { flex-wrap: wrap; }
   .topbar-actions { width: 100%; }
-
   .content { padding: 14px 16px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .stat-card { padding: 12px 13px; }
   .stat-val { font-size: 24px; }
-
-  /* Hide desktop table, show mobile cards */
   .card { display: none; }
   .mobile-cases { display: flex; }
-
   .panels { grid-template-columns: 1fr; }
   .detail-card { display: none; }
   .detail-card.visible { display: block; }
-
   .form-row { grid-template-columns: 1fr; }
 }
 
@@ -691,10 +494,7 @@ body {
 }
 
 /* ── ANIMATIONS ─────────────────────────────────────────── */
-.fade-up {
-  opacity: 0;
-  animation: fadeUp 0.35s ease forwards;
-}
+.fade-up { opacity: 0; animation: fadeUp 0.35s ease forwards; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 .d1{animation-delay:0.05s} .d2{animation-delay:0.10s} .d3{animation-delay:0.15s} .d4{animation-delay:0.20s}
 </style>
@@ -707,7 +507,15 @@ body {
     <div class="logo-icon">⚖</div>
     NyayTrack
   </div>
-  <div class="hamburger" onclick="openDrawer()">☰</div>
+  <div style="display:flex;gap:6px;align-items:center;">
+    <!-- Mobile lang buttons -->
+    <div style="display:flex;gap:3px;">
+      <button class="lang-btn active" onclick="setLang('ml',this)" style="padding:4px 7px;font-size:10px;">മലയാളം</button>
+      <button class="lang-btn" onclick="setLang('en',this)" style="padding:4px 7px;font-size:10px;">EN</button>
+      <button class="lang-btn" onclick="setLang('hi',this)" style="padding:4px 7px;font-size:10px;">हि</button>
+    </div>
+    <div class="hamburger" onclick="openDrawer()">☰</div>
+  </div>
 </div>
 
 <!-- ══ DRAWER ════════════════════════════════════════ -->
@@ -716,28 +524,33 @@ body {
   <div class="drawer-close" onclick="closeDrawer()">✕</div>
   <div class="logo-area">
     <div class="logo"><div class="logo-icon">⚖</div> NyayTrack</div>
-    <div class="logo-sub">Malappuram District Court</div>
+    <div class="logo-sub" data-i18n="court_name">മലപ്പുറം ജില്ലാ കോടതി</div>
     <div class="sync-pill" onclick="triggerSync()">
       <div class="sync-dot"></div>
-      <div class="sync-text">Synced · <span id="syncTimeD">Just now</span></div>
+      <div class="sync-text" data-i18n="synced_prefix">Synced · </div>
     </div>
   </div>
-  <div class="nav-group">
-    <div class="nav-group-label">Cases</div>
-    <div class="nav-item active" onclick="filterCases('all',this)"><span class="nav-icon">⚖</span>All Cases<span class="nav-badge">7</span></div>
-    <div class="nav-item" onclick="filterCases('urgent',this)"><span class="nav-icon">🔴</span>Urgent<span class="nav-badge red">2</span></div>
-    <div class="nav-item" onclick="filterCases('week',this)"><span class="nav-icon">📅</span>This Week<span class="nav-badge">4</span></div>
-    <div class="nav-item" onclick="filterCases('disposed',this)"><span class="nav-icon">✓</span>Disposed<span class="nav-badge">3</span></div>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('ml',this)">മലയാളം</button>
+    <button class="lang-btn" onclick="setLang('en',this)">English</button>
+    <button class="lang-btn" onclick="setLang('hi',this)">हिन्दी</button>
   </div>
   <div class="nav-group">
-    <div class="nav-group-label">Courts</div>
-    <div class="nav-item"><span class="nav-icon">🏛</span>Malappuram District</div>
-    <div class="nav-item"><span class="nav-icon">🏛</span>Kerala High Court</div>
-    <div class="nav-item"><span class="nav-icon">🏛</span>Munsiff Court</div>
+    <div class="nav-group-label" data-i18n="nav_cases">കേസുകൾ</div>
+    <div class="nav-item active" onclick="filterCases('all',this)"><span class="nav-icon">⚖</span><span data-i18n="all_cases">എല്ലാ കേസുകൾ</span><span class="nav-badge">7</span></div>
+    <div class="nav-item" onclick="filterCases('urgent',this)"><span class="nav-icon">🔴</span><span data-i18n="urgent">അടിയന്തിരം</span><span class="nav-badge red">2</span></div>
+    <div class="nav-item" onclick="filterCases('week',this)"><span class="nav-icon">📅</span><span data-i18n="this_week">ഈ ആഴ്ച</span><span class="nav-badge">4</span></div>
+    <div class="nav-item" onclick="filterCases('disposed',this)"><span class="nav-icon">✓</span><span data-i18n="disposed">തീർപ്പാക്കിയത്</span><span class="nav-badge">3</span></div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label" data-i18n="nav_courts">കോടതികൾ</div>
+    <div class="nav-item"><span class="nav-icon">🏛</span><span data-i18n="malappuram_district">മലപ്പുറം ജില്ലാ</span></div>
+    <div class="nav-item"><span class="nav-icon">🏛</span><span data-i18n="kerala_hc">കേരള ഹൈക്കോടതി</span></div>
+    <div class="nav-item"><span class="nav-icon">🏛</span><span data-i18n="munsiff">മൻസിഫ് കോടതി</span></div>
   </div>
   <div class="sidebar-footer" style="margin-top:auto;">
     <div class="avatar">A</div>
-    <div><div class="footer-name">Adv. Anitha Mohan</div><div class="footer-sub">Malappuram Bar</div></div>
+    <div><div class="footer-name">Adv. Anitha Mohan</div><div class="footer-sub" data-i18n="bar_assoc">മലപ്പുറം ബാർ</div></div>
   </div>
 </div>
 
@@ -748,34 +561,42 @@ body {
   <aside class="sidebar">
     <div class="logo-area">
       <div class="logo"><div class="logo-icon">⚖</div> NyayTrack</div>
-      <div class="logo-sub">Malappuram District Court</div>
+      <div class="logo-sub" data-i18n="court_name">മലപ്പുറം ജില്ലാ കോടതി</div>
       <div class="sync-pill" onclick="triggerSync()">
         <div class="sync-dot"></div>
-        <div class="sync-text">Synced · <span id="syncTime">Just now</span></div>
+        <div class="sync-text"><span data-i18n="synced_just">ഇപ്പോൾ സമന്വയിച്ചു</span> · <span id="syncTime"></span></div>
       </div>
     </div>
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('ml',this)">മലയാളം</button>
+      <button class="lang-btn" onclick="setLang('en',this)">English</button>
+      <button class="lang-btn" onclick="setLang('hi',this)">हिन्दी</button>
+    </div>
+
     <div class="nav-group">
-      <div class="nav-group-label">Cases</div>
-      <div class="nav-item active" onclick="filterCases('all',this)"><span class="nav-icon">⚖</span>All Cases<span class="nav-badge">7</span></div>
-      <div class="nav-item" onclick="filterCases('urgent',this)"><span class="nav-icon">🔴</span>Urgent<span class="nav-badge red">2</span></div>
-      <div class="nav-item" onclick="filterCases('week',this)"><span class="nav-icon">📅</span>This Week<span class="nav-badge">4</span></div>
-      <div class="nav-item" onclick="filterCases('disposed',this)"><span class="nav-icon">✓</span>Disposed<span class="nav-badge">3</span></div>
+      <div class="nav-group-label" data-i18n="nav_cases">കേസുകൾ</div>
+      <div class="nav-item active" onclick="filterCases('all',this)"><span class="nav-icon">⚖</span><span data-i18n="all_cases">എല്ലാ കേസുകൾ</span><span class="nav-badge">7</span></div>
+      <div class="nav-item" onclick="filterCases('urgent',this)"><span class="nav-icon">🔴</span><span data-i18n="urgent">അടിയന്തിരം</span><span class="nav-badge red">2</span></div>
+      <div class="nav-item" onclick="filterCases('week',this)"><span class="nav-icon">📅</span><span data-i18n="this_week">ഈ ആഴ്ച</span><span class="nav-badge">4</span></div>
+      <div class="nav-item" onclick="filterCases('disposed',this)"><span class="nav-icon">✓</span><span data-i18n="disposed">തീർപ്പാക്കിയത്</span><span class="nav-badge">3</span></div>
     </div>
     <div class="nav-group">
-      <div class="nav-group-label">Courts</div>
-      <div class="nav-item"><span class="nav-icon">🏛</span>Malappuram District</div>
-      <div class="nav-item"><span class="nav-icon">🏛</span>Kerala High Court</div>
-      <div class="nav-item"><span class="nav-icon">🏛</span>Munsiff Court</div>
+      <div class="nav-group-label" data-i18n="nav_courts">കോടതികൾ</div>
+      <div class="nav-item"><span class="nav-icon">🏛</span><span data-i18n="malappuram_district">മലപ്പുറം ജില്ലാ</span></div>
+      <div class="nav-item"><span class="nav-icon">🏛</span><span data-i18n="kerala_hc">കേരള ഹൈക്കോടതി</span></div>
+      <div class="nav-item"><span class="nav-icon">🏛</span><span data-i18n="munsiff">മൻസിഫ് കോടതി</span></div>
     </div>
     <div class="nav-group">
-      <div class="nav-group-label">Clients</div>
+      <div class="nav-group-label" data-i18n="nav_clients">കക്ഷികൾ</div>
       <div class="nav-item"><span class="nav-icon">👤</span>Mohammed Salim</div>
       <div class="nav-item"><span class="nav-icon">👤</span>Fathima Beevi</div>
       <div class="nav-item"><span class="nav-icon">👤</span>Rajan K.V.</div>
     </div>
     <div class="sidebar-footer">
       <div class="avatar">A</div>
-      <div><div class="footer-name">Adv. Anitha Mohan</div><div class="footer-sub">Malappuram Bar</div></div>
+      <div><div class="footer-name">Adv. Anitha Mohan</div><div class="footer-sub" data-i18n="bar_assoc">മലപ്പുറം ബാർ</div></div>
     </div>
   </aside>
 
@@ -784,15 +605,15 @@ body {
 
     <!-- TOPBAR -->
     <div class="topbar">
-      <div class="page-title" id="pageTitle">All Cases</div>
+      <div class="page-title" id="pageTitle" data-i18n="all_cases">എല്ലാ കേസുകൾ</div>
       <div class="topbar-actions">
         <div class="search-wrap">
           <span class="search-icon">⌕</span>
-          <input type="text" placeholder="Search CNR, name…" oninput="searchCases(this.value)">
+          <input type="text" id="searchInput" placeholder="CNR, പേര്…" oninput="searchCases(this.value)">
         </div>
-        <button class="btn" onclick="exportCSV()">Export</button>
-        <button class="btn" onclick="triggerSync()">↻ Sync</button>
-        <button class="btn btn-primary" onclick="openModal()">+ Add Case</button>
+        <button class="btn" onclick="exportCSV()" data-i18n="export">Export</button>
+        <button class="btn" onclick="triggerSync()">↻ <span data-i18n="sync">Sync</span></button>
+        <button class="btn btn-primary" onclick="openModal()">+ <span data-i18n="add_case">കേസ് ചേർക്കുക</span></button>
       </div>
     </div>
 
@@ -801,17 +622,33 @@ body {
 
       <!-- Stats -->
       <div class="stats-grid">
-        <div class="stat-card accent fade-up d1"><div class="stat-label">Active Cases</div><div class="stat-val">7</div><div class="stat-sub">3 courts</div></div>
-        <div class="stat-card fade-up d2"><div class="stat-label">This Week</div><div class="stat-val">4</div><div class="stat-sub">Next: Mon 5 May</div></div>
-        <div class="stat-card fade-up d3"><div class="stat-label">Unacknowledged</div><div class="stat-val">2</div><div class="stat-sub">Awaiting reply</div></div>
-        <div class="stat-card fade-up d4"><div class="stat-label">Disposed 2025</div><div class="stat-val">3</div><div class="stat-sub">This year</div></div>
+        <div class="stat-card accent fade-up d1">
+          <div class="stat-label" data-i18n="active_cases">സജീവ കേസുകൾ</div>
+          <div class="stat-val">7</div>
+          <div class="stat-sub" data-i18n="courts_count">3 കോടതികൾ</div>
+        </div>
+        <div class="stat-card fade-up d2">
+          <div class="stat-label" data-i18n="this_week">ഈ ആഴ്ച</div>
+          <div class="stat-val">4</div>
+          <div class="stat-sub" data-i18n="next_date_hint">അടുത്തത്: തി 5 മേയ്</div>
+        </div>
+        <div class="stat-card fade-up d3">
+          <div class="stat-label" data-i18n="unacked">സ്ഥിരീകരിക്കാത്തത്</div>
+          <div class="stat-val">2</div>
+          <div class="stat-sub" data-i18n="awaiting">മറുപടി കാത്തിരിക്കുന്നു</div>
+        </div>
+        <div class="stat-card fade-up d4">
+          <div class="stat-label" data-i18n="disposed_year">തീർപ്പ് 2025</div>
+          <div class="stat-val">3</div>
+          <div class="stat-sub" data-i18n="this_year">ഈ വർഷം</div>
+        </div>
       </div>
 
       <!-- Alert -->
       <div class="alert" id="alertBanner">
         <div class="alert-dot"></div>
-        <div class="alert-body"><strong>Mohammed Salim</strong> has not acknowledged tomorrow's hearing reminder (5 May). Resend?</div>
-        <button class="alert-btn" onclick="resendAlert()">Resend</button>
+        <div class="alert-body" id="alertText"><strong>Mohammed Salim</strong> <span data-i18n="alert_body">നാളത്തെ വിചാരണ ഓർമ്മപ്പെടുത്തൽ (5 മേയ്) സ്ഥിരീകരിച്ചിട്ടില്ല. വീണ്ടും അയക്കണോ?</span></div>
+        <button class="alert-btn" onclick="resendAlert()" data-i18n="resend">വീണ്ടും അയക്കുക</button>
       </div>
 
       <!-- Two panel -->
@@ -819,50 +656,52 @@ body {
 
         <!-- Left: desktop table + mobile cards -->
         <div>
-
           <!-- Desktop table -->
           <div class="card fade-up">
             <div class="card-header">
-              <div class="card-title" id="tableTitle">All Cases</div>
+              <div class="card-title" id="tableTitle" data-i18n="all_cases">എല്ലാ കേസുകൾ</div>
             </div>
             <div class="table-head">
-              <div class="th">Case</div>
-              <div class="th">Court</div>
-              <div class="th">Next Date</div>
-              <div class="th">Status</div>
-              <div class="th">Client</div>
+              <div class="th" data-i18n="th_case">കേസ്</div>
+              <div class="th" data-i18n="th_court">കോടതി</div>
+              <div class="th" data-i18n="th_next">അടുത്ത തീയതി</div>
+              <div class="th" data-i18n="th_status">സ്ഥിതി</div>
+              <div class="th" data-i18n="th_client">കക്ഷി</div>
             </div>
             <div id="tableBody"></div>
           </div>
 
           <!-- Mobile cards -->
           <div class="mobile-cases" id="mobileCards"></div>
-
         </div>
 
         <!-- Right: detail panel -->
         <div class="detail-card" id="detailCard">
           <div class="detail-top">
-            <div class="detail-name" id="dName">Select a case</div>
-            <div class="detail-sub" id="dMeta">Tap any case to view its full history and notify the client.</div>
+            <div class="detail-name" id="dName" data-i18n="select_case">ഒരു കേസ് തിരഞ്ഞെടുക്കൂ</div>
+            <div class="detail-sub" id="dMeta" data-i18n="select_case_hint">പൂർണ്ണ ചരിത്രവും അറിയിപ്പ് ഓപ്ഷനുകളും കാണാൻ ഏതെങ്കിലും കേസിൽ ടാപ്പ് ചെയ്യൂ.</div>
           </div>
           <div class="tags" id="dTags"></div>
           <div class="detail-section">
-            <div class="ds-title">Case Info</div>
+            <div class="ds-title" data-i18n="case_info">കേസ് വിവരങ്ങൾ</div>
             <div class="info-grid" id="dInfo"></div>
           </div>
+          <div class="detail-section" id="dCounselSection" style="display:none">
+            <div class="ds-title" data-i18n="correspondent_counsel">കറസ്‌പോൻഡന്റ് അഭിഭാഷകൻ</div>
+            <div id="dCounsel"></div>
+          </div>
           <div class="detail-section">
-            <div class="ds-title">Hearing Timeline</div>
+            <div class="ds-title" data-i18n="hearing_timeline">വിചാരണ ടൈംലൈൻ</div>
             <div class="tl" id="dTimeline"></div>
           </div>
           <div class="detail-section" id="dNotifyWrap" style="display:none">
-            <div class="ds-title">Notify Client</div>
+            <div class="ds-title" data-i18n="notify_client">കക്ഷിക്ക് അറിയിക്കുക</div>
             <div style="font-size:12px;color:var(--text2);margin-bottom:10px;" id="dClient"></div>
             <div class="notify-grid">
-              <button class="nbtn wa" onclick="sendNotif('WhatsApp')">💬 WhatsApp</button>
+              <button class="nbtn wa" onclick="openWAModal()">💬 WhatsApp</button>
               <button class="nbtn" onclick="sendNotif('SMS')">📱 SMS</button>
-              <button class="nbtn" onclick="sendNotif('Email')">✉ Email</button>
-              <button class="nbtn" onclick="sendNotif('Call')">📞 Call</button>
+              <button class="nbtn" onclick="sendNotif('Email')">✉ <span data-i18n="email">Email</span></button>
+              <button class="nbtn" onclick="sendNotif('Call')">📞 <span data-i18n="call">Call</span></button>
             </div>
           </div>
         </div>
@@ -883,14 +722,18 @@ body {
     <div class="tags" id="shTags" style="padding:0;margin-bottom:12px;"></div>
   </div>
   <div style="padding:0 16px">
-    <div class="ds-title" style="margin-bottom:8px;">Case Info</div>
+    <div class="ds-title" style="margin-bottom:8px;" data-i18n="case_info">കേസ് വിവരങ്ങൾ</div>
     <div class="info-grid" id="shInfo" style="margin-bottom:16px;"></div>
-    <div class="ds-title" style="margin-bottom:8px;">Hearing Timeline</div>
+    <div id="shCounselSection">
+      <div class="ds-title" style="margin-bottom:8px;" data-i18n="correspondent_counsel">കറസ്‌പോൻഡന്റ് അഭിഭാഷകൻ</div>
+      <div id="shCounsel" style="margin-bottom:16px;"></div>
+    </div>
+    <div class="ds-title" style="margin-bottom:8px;" data-i18n="hearing_timeline">വിചാരണ ടൈംലൈൻ</div>
     <div class="tl" id="shTimeline" style="margin-bottom:16px;"></div>
-    <div class="ds-title" style="margin-bottom:8px;">Notify Client</div>
+    <div class="ds-title" style="margin-bottom:8px;" data-i18n="notify_client">കക്ഷിക്ക് അറിയിക്കുക</div>
     <div style="font-size:12px;color:var(--text2);margin-bottom:10px;" id="shClient"></div>
     <div class="notify-grid" style="margin-bottom:20px;">
-      <button class="nbtn wa" onclick="sendNotif('WhatsApp')">💬 WhatsApp</button>
+      <button class="nbtn wa" onclick="openWAModal()">💬 WhatsApp</button>
       <button class="nbtn" onclick="sendNotif('SMS')">📱 SMS</button>
       <button class="nbtn" onclick="sendNotif('Email')">✉ Email</button>
       <button class="nbtn" onclick="sendNotif('Call')">📞 Call</button>
@@ -901,29 +744,56 @@ body {
 <!-- ══ ADD CASE MODAL ════════════════════════════════════ -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal">
-    <div class="modal-title">Add New Case</div>
-    <div class="modal-sub">Enter CNR to auto-fetch from eCourts</div>
+    <div class="modal-title" data-i18n="add_new_case">പുതിയ കേസ് ചേർക്കുക</div>
+    <div class="modal-sub" data-i18n="add_case_hint">eCourts-ൽ നിന്ന് ഓട്ടോ-ഫെച്ച് ചെയ്യാൻ CNR നൽകുക</div>
     <div class="form-group">
-      <label class="form-label">CNR Number</label>
+      <label class="form-label" data-i18n="cnr_number">CNR നമ്പർ</label>
       <input type="text" class="form-input" id="cnrInput" placeholder="KLML120002992024" maxlength="16" style="text-transform:uppercase;letter-spacing:0.05em" oninput="this.value=this.value.toUpperCase()">
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Client Name</label>
-        <input type="text" class="form-input" id="clientName" placeholder="Full name">
+        <label class="form-label" data-i18n="client_name">കക്ഷിയുടെ പേര്</label>
+        <input type="text" class="form-input" id="clientName" placeholder="പൂർണ്ണ നാമം">
       </div>
       <div class="form-group">
-        <label class="form-label">Phone</label>
+        <label class="form-label" data-i18n="phone">ഫോൺ</label>
         <input type="tel" class="form-input" id="clientPhone" placeholder="+91 98765 43210">
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">Notes</label>
+      <label class="form-label" data-i18n="corresp_counsel_label">കറസ്‌പോൻഡന്റ് അഭിഭാഷകൻ (ഐച്ഛികം)</label>
+      <div class="form-row">
+        <input type="text" class="form-input" id="corrCounselName" placeholder="Adv. Name">
+        <input type="tel" class="form-input" id="corrCounselPhone" placeholder="+91 98765 43210">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="notes">കുറിപ്പുകൾ</label>
       <input type="text" class="form-input" id="caseNotes" placeholder="Property, bail, family…">
     </div>
     <div class="modal-actions">
-      <button class="btn" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="addCase()">Fetch from eCourts →</button>
+      <button class="btn" onclick="closeModal()" data-i18n="cancel">റദ്ദാക്കുക</button>
+      <button class="btn btn-primary" onclick="addCase()" data-i18n="fetch_ecourts">eCourts-ൽ നിന്ന് ഫെച്ച് ചെയ്യുക →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ WHATSAPP TEMPLATE MODAL ══════════════════════════ -->
+<div class="wa-modal-overlay" id="waModalOverlay" onclick="closeWAModalOutside(event)">
+  <div class="wa-modal">
+    <div class="wa-modal-title">💬 WhatsApp <span data-i18n="wa_send">അറിയിപ്പ്</span></div>
+    <div class="wa-modal-sub" id="waModalSub">കക്ഷിക്ക് അയക്കാൻ ഒരു ടെംപ്ലേറ്റ് തിരഞ്ഞെടുക്കൂ</div>
+
+    <div class="wa-template-list" id="waTemplateList">
+      <!-- Rendered by JS -->
+    </div>
+
+    <div class="wa-preview" id="waPreview"></div>
+
+    <div class="wa-actions">
+      <button class="btn" onclick="closeWAModal()" data-i18n="cancel">റദ്ദാക്കുക</button>
+      <button class="btn" onclick="copyWAText()" id="waCopyBtn" style="display:none">📋 <span data-i18n="copy">Copy</span></button>
+      <button class="btn btn-primary" onclick="sendWA()" data-i18n="open_whatsapp">WhatsApp തുറക്കുക →</button>
     </div>
   </div>
 </div>
@@ -933,6 +803,175 @@ body {
 
 <!-- ══ JS ════════════════════════════════════════════════ -->
 <script>
+/* ══════════════════════════════════════════════════════════
+   i18n / Language System
+══════════════════════════════════════════════════════════ */
+const LANGS = {
+  ml: {
+    court_name: 'മലപ്പുറം ജില്ലാ കോടതി',
+    synced_just: 'ഇപ്പോൾ സമന്വയിച്ചു',
+    nav_cases: 'കേസുകൾ', nav_courts: 'കോടതികൾ', nav_clients: 'കക്ഷികൾ',
+    all_cases: 'എല്ലാ കേസുകൾ', urgent: 'അടിയന്തിരം', this_week: 'ഈ ആഴ്ച', disposed: 'തീർപ്പാക്കിയത്',
+    malappuram_district: 'മലപ്പുറം ജില്ലാ', kerala_hc: 'കേരള ഹൈക്കോടതി', munsiff: 'മൻസിഫ് കോടതി',
+    bar_assoc: 'മലപ്പുറം ബാർ',
+    active_cases: 'സജീവ കേസുകൾ', courts_count: '3 കോടതികൾ',
+    next_date_hint: 'അടുത്തത്: തി 5 മേയ്',
+    unacked: 'സ്ഥിരീകരിക്കാത്തത്', awaiting: 'മറുപടി കാത്തിരിക്കുന്നു',
+    disposed_year: 'തീർപ്പ് 2025', this_year: 'ഈ വർഷം',
+    alert_body: 'നാളത്തെ വിചാരണ ഓർമ്മപ്പെടുത്തൽ (5 മേയ്) സ്ഥിരീകരിച്ചിട്ടില്ല. വീണ്ടും അയക്കണോ?',
+    resend: 'വീണ്ടും അയക്കുക',
+    th_case: 'കേസ്', th_court: 'കോടതി', th_next: 'അടുത്ത തീയതി', th_status: 'സ്ഥിതി', th_client: 'കക്ഷി',
+    select_case: 'ഒരു കേസ് തിരഞ്ഞെടുക്കൂ',
+    select_case_hint: 'പൂർണ്ണ ചരിത്രവും അറിയിപ്പ് ഓപ്ഷനുകളും കാണാൻ ഏതെങ്കിലും കേസിൽ ടാപ്പ് ചെയ്യൂ.',
+    case_info: 'കേസ് വിവരങ്ങൾ',
+    correspondent_counsel: 'കറസ്‌പോൻഡന്റ് അഭിഭാഷകൻ',
+    hearing_timeline: 'വിചാരണ ടൈംലൈൻ',
+    notify_client: 'കക്ഷിക്ക് അറിയിക്കുക',
+    email: 'ഇ-മെയിൽ', call: 'വിളിക്കുക',
+    add_case: 'കേസ് ചേർക്കുക', export: 'Export', sync: 'Sync',
+    add_new_case: 'പുതിയ കേസ് ചേർക്കുക',
+    add_case_hint: 'eCourts-ൽ നിന്ന് ഓട്ടോ-ഫെച്ച് ചെയ്യാൻ CNR നൽകുക',
+    cnr_number: 'CNR നമ്പർ', client_name: 'കക്ഷിയുടെ പേര്', phone: 'ഫോൺ',
+    corresp_counsel_label: 'കറസ്‌പോൻഡന്റ് അഭിഭാഷകൻ (ഐച്ഛികം)',
+    notes: 'കുറിപ്പുകൾ', cancel: 'റദ്ദാക്കുക', fetch_ecourts: 'eCourts-ൽ നിന്ന് ഫെച്ച് ചെയ്യുക →',
+    wa_send: 'അറിയിപ്പ്', copy: 'Copy', open_whatsapp: 'WhatsApp തുറക്കുക →',
+    petitioner: 'ഹർജിക്കാരൻ', respondent: 'പ്രതിഭാഗം',
+    pet_adv: 'ഹർജിക്കാരന്റെ വക്കീൽ', res_adv: 'പ്രതിഭാഗം വക്കീൽ',
+    next_hearing: 'അടുത്ത ഹിയറിംഗ്', stage: 'ഘട്ടം',
+    client_label: 'കക്ഷി', urgent_cases: 'അടിയന്തിര കേസുകൾ', disposed_cases: 'തീർപ്പാക്കിയ കേസുകൾ',
+    no_counsel: 'ബന്ധപ്പെടാൻ ഇല്ല', counsel_type_opp: 'എതിർഭാഗം', counsel_type_corresp: 'കറസ്‌പോൻഡന്റ്',
+    toast_syncing: 'eCourts-മായി സമന്വയിക്കുന്നു…', toast_synced: '✓ എല്ലാ കേസുകളും സമന്വയിച്ചു',
+    toast_sent: '✓ WhatsApp അയച്ചു',
+    toast_resent: '✓ ഓർമ്മപ്പെടുത്തൽ WhatsApp-ൽ വീണ്ടും അയച്ചു',
+    toast_exported: '✓ CSV ആയി Export ചെയ്തു',
+    toast_notif: '✓ {ch} {name}-ന് അയച്ചു',
+    toast_fetching: '{cnr} eCourts-ൽ നിന്ന് ഫെച്ച് ചെയ്യുന്നു…',
+    toast_added: '✓ കേസ് {cnr} വിജയകരമായി ചേർത്തു',
+    val_cnr: '⚠ സാധുതയുള്ള CNR നമ്പർ നൽകുക',
+    val_client: '⚠ കക്ഷിയുടെ പേര് നൽകുക',
+    wa_template_title: 'WhatsApp ടെംപ്ലേറ്റ് തിരഞ്ഞെടുക്കൂ',
+  },
+  en: {
+    court_name: 'Malappuram District Court',
+    synced_just: 'Just now',
+    nav_cases: 'Cases', nav_courts: 'Courts', nav_clients: 'Clients',
+    all_cases: 'All Cases', urgent: 'Urgent', this_week: 'This Week', disposed: 'Disposed',
+    malappuram_district: 'Malappuram District', kerala_hc: 'Kerala High Court', munsiff: 'Munsiff Court',
+    bar_assoc: 'Malappuram Bar',
+    active_cases: 'Active Cases', courts_count: '3 courts',
+    next_date_hint: 'Next: Mon 5 May',
+    unacked: 'Unacknowledged', awaiting: 'Awaiting reply',
+    disposed_year: 'Disposed 2025', this_year: 'This year',
+    alert_body: "has not acknowledged tomorrow's hearing reminder (5 May). Resend?",
+    resend: 'Resend',
+    th_case: 'Case', th_court: 'Court', th_next: 'Next Date', th_status: 'Status', th_client: 'Client',
+    select_case: 'Select a case',
+    select_case_hint: 'Tap any case to view its full history and notify the client.',
+    case_info: 'Case Info',
+    correspondent_counsel: 'Correspondent Counsel',
+    hearing_timeline: 'Hearing Timeline',
+    notify_client: 'Notify Client',
+    email: 'Email', call: 'Call',
+    add_case: 'Add Case', export: 'Export', sync: 'Sync',
+    add_new_case: 'Add New Case',
+    add_case_hint: 'Enter CNR to auto-fetch from eCourts',
+    cnr_number: 'CNR Number', client_name: 'Client Name', phone: 'Phone',
+    corresp_counsel_label: 'Correspondent Counsel (Optional)',
+    notes: 'Notes', cancel: 'Cancel', fetch_ecourts: 'Fetch from eCourts →',
+    wa_send: 'Notification', copy: 'Copy', open_whatsapp: 'Open WhatsApp →',
+    petitioner: 'Petitioner', respondent: 'Respondent',
+    pet_adv: 'Pet. Advocate', res_adv: 'Res. Advocate',
+    next_hearing: 'Next Hearing', stage: 'Stage',
+    client_label: 'Client', urgent_cases: 'Urgent Cases', disposed_cases: 'Disposed Cases',
+    no_counsel: 'Not assigned', counsel_type_opp: 'Opposing', counsel_type_corresp: 'Correspondent',
+    toast_syncing: 'Syncing with eCourts…', toast_synced: '✓ All cases synced',
+    toast_sent: '✓ WhatsApp sent',
+    toast_resent: '✓ Reminder resent via WhatsApp',
+    toast_exported: '✓ Exported as CSV',
+    toast_notif: '✓ {ch} sent to {name}',
+    toast_fetching: 'Fetching {cnr} from eCourts…',
+    toast_added: '✓ Case {cnr} added successfully',
+    val_cnr: '⚠ Enter a valid CNR number', val_client: '⚠ Enter client name',
+    wa_template_title: 'Select WhatsApp Template',
+  },
+  hi: {
+    court_name: 'मलप्पुरम जिला न्यायालय',
+    synced_just: 'अभी सिंक हुआ',
+    nav_cases: 'मामले', nav_courts: 'न्यायालय', nav_clients: 'पक्षकार',
+    all_cases: 'सभी मामले', urgent: 'अत्यावश्यक', this_week: 'इस सप्ताह', disposed: 'निपटाए गए',
+    malappuram_district: 'मलप्पुरम जिला', kerala_hc: 'केरल उच्च न्यायालय', munsiff: 'मुंसिफ न्यायालय',
+    bar_assoc: 'मलप्पुरम बार',
+    active_cases: 'सक्रिय मामले', courts_count: '3 न्यायालय',
+    next_date_hint: 'अगला: सोम 5 मई',
+    unacked: 'अपुष्टित', awaiting: 'प्रतीक्षारत',
+    disposed_year: 'निपटाए 2025', this_year: 'इस वर्ष',
+    alert_body: 'ने कल की सुनवाई की अनुस्मारक (5 मई) स्वीकृत नहीं की। फिर भेजें?',
+    resend: 'फिर भेजें',
+    th_case: 'मामला', th_court: 'न्यायालय', th_next: 'अगली तारीख', th_status: 'स्थिति', th_client: 'पक्षकार',
+    select_case: 'एक मामला चुनें',
+    select_case_hint: 'पूर्ण इतिहास और अधिसूचना विकल्प देखने के लिए किसी मामले पर टैप करें।',
+    case_info: 'मामले की जानकारी',
+    correspondent_counsel: 'कोरेस्पॉन्डेंट अधिवक्ता',
+    hearing_timeline: 'सुनवाई टाइमलाइन',
+    notify_client: 'पक्षकार को सूचित करें',
+    email: 'ईमेल', call: 'कॉल',
+    add_case: 'मामला जोड़ें', export: 'Export', sync: 'Sync',
+    add_new_case: 'नया मामला जोड़ें',
+    add_case_hint: 'eCourts से ऑटो-फेच के लिए CNR दर्ज करें',
+    cnr_number: 'CNR नंबर', client_name: 'पक्षकार का नाम', phone: 'फ़ोन',
+    corresp_counsel_label: 'कोरेस्पॉन्डेंट अधिवक्ता (वैकल्पिक)',
+    notes: 'टिप्पणियाँ', cancel: 'रद्द करें', fetch_ecourts: 'eCourts से फेच करें →',
+    wa_send: 'अधिसूचना', copy: 'Copy', open_whatsapp: 'WhatsApp खोलें →',
+    petitioner: 'याचिकाकर्ता', respondent: 'प्रतिवादी',
+    pet_adv: 'याची के अधिवक्ता', res_adv: 'प्रति. अधिवक्ता',
+    next_hearing: 'अगली सुनवाई', stage: 'चरण',
+    client_label: 'पक्षकार', urgent_cases: 'अत्यावश्यक मामले', disposed_cases: 'निपटाए गए मामले',
+    no_counsel: 'नियुक्त नहीं', counsel_type_opp: 'विरोधी पक्ष', counsel_type_corresp: 'कोरेस्पॉन्डेंट',
+    toast_syncing: 'eCourts से सिंक हो रहा है…', toast_synced: '✓ सभी मामले सिंक हुए',
+    toast_sent: '✓ WhatsApp भेजा',
+    toast_resent: '✓ अनुस्मारक WhatsApp से फिर भेजा',
+    toast_exported: '✓ CSV के रूप में निर्यात किया',
+    toast_notif: '✓ {ch} {name} को भेजा',
+    toast_fetching: '{cnr} को eCourts से फेच कर रहे हैं…',
+    toast_added: '✓ मामला {cnr} सफलतापूर्वक जोड़ा गया',
+    val_cnr: '⚠ मान्य CNR नंबर दर्ज करें', val_client: '⚠ पक्षकार का नाम दर्ज करें',
+    wa_template_title: 'WhatsApp टेम्प्लेट चुनें',
+  }
+};
+
+let currentLang = 'ml';
+function t(key) { return (LANGS[currentLang] && LANGS[currentLang][key]) || LANGS['en'][key] || key; }
+
+function setLang(lang, clickedBtn) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  // Update all lang buttons
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll(`.lang-btn`).forEach(b => {
+    if(b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${lang}'`)) b.classList.add('active');
+  });
+  // Translate static elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    el.textContent = t(key);
+  });
+  // Update search placeholder
+  document.getElementById('searchInput').placeholder = lang === 'ml' ? 'CNR, പേര്…' : lang === 'hi' ? 'CNR, नाम…' : 'CNR, name…';
+  // Re-render dynamic content
+  const cases = filtered();
+  renderTable(cases);
+  renderMobile(cases);
+  if(selected) {
+    buildDetail(selected, {name:'dName',meta:'dMeta',tags:'dTags',info:'dInfo',timeline:'dTimeline',client:'dClient',counsel:'dCounsel',counselSection:'dCounselSection'});
+    document.getElementById('dNotifyWrap').style.display = 'block';
+  }
+  document.getElementById('pageTitle').textContent = t('all_cases');
+  document.getElementById('tableTitle').textContent = t('all_cases');
+}
+
+/* ══════════════════════════════════════════════════════════
+   Case Data
+══════════════════════════════════════════════════════════ */
 const CASES = [
   {
     id:1, cnr:"KLML120002992024",
@@ -946,6 +985,13 @@ const CASES = [
     status:"Hearing", stage:"Arguments — Petitioner", urgent:true,
     client:"M. Salim", clientPhone:"+91 98765 43210",
     tags:["Property","Stay Order Active","eCourts Synced"],
+    correspondentCounsel: {
+      name: "Adv. P. Suresh Kumar",
+      barNo: "KER/ML/2018/4521",
+      phone: "+91 94470 12345",
+      email: "sureshkumar.adv@gmail.com",
+      court: "Malappuram District Court"
+    },
     history:[
       {date:"12 Nov 2024",ev:"Suit filed — OS 299/2024",note:"Stay of dispossession granted",t:"done"},
       {date:"10 Jan 2025",ev:"First hearing — Notice issued",note:"Respondent to file reply in 8 weeks",t:"done"},
@@ -967,6 +1013,13 @@ const CASES = [
     status:"Reserved", stage:"Judgment Reserved", urgent:true,
     client:"F. Beevi", clientPhone:"+91 98456 71230",
     tags:["Criminal","Bail","Judgment Reserved"],
+    correspondentCounsel: {
+      name: "Adv. Rema Krishnan",
+      barNo: "KER/EKM/2015/1234",
+      phone: "+91 97446 78901",
+      email: "rema.adv@gmail.com",
+      court: "Kerala High Court, Ernakulam"
+    },
     history:[
       {date:"5 Dec 2024",ev:"Bail application filed",note:"Listed before vacation bench",t:"done"},
       {date:"18 Dec 2024",ev:"First hearing",note:"State to file objection",t:"done"},
@@ -986,6 +1039,7 @@ const CASES = [
     status:"Hearing", stage:"Evidence Stage", urgent:false,
     client:"R. K.V.", clientPhone:"+91 97461 23450",
     tags:["Civil","Money Recovery","Evidence"],
+    correspondentCounsel: null,
     history:[
       {date:"3 Sep 2024",ev:"Plaint filed",note:"₹4.5L recovery + interest",t:"done"},
       {date:"28 Oct 2024",ev:"Summons issued",note:"Defendant appeared through counsel",t:"done"},
@@ -1006,6 +1060,13 @@ const CASES = [
     status:"Notice Issued", stage:"Execution Petition", urgent:false,
     client:"KGB", clientPhone:"+91 94001 23456",
     tags:["Execution","Bank Recovery"],
+    correspondentCounsel: {
+      name: "Adv. Vinod Nair",
+      barNo: "KER/ML/2020/5678",
+      phone: "+91 95440 56789",
+      email: "vinod.nair.adv@gmail.com",
+      court: "Malappuram District Court"
+    },
     history:[
       {date:"1 Feb 2025",ev:"Execution petition filed",note:"Decree in EP/122/2023",t:"done"},
       {date:"18 Mar 2025",ev:"Notice issued to JD",note:"Service pending",t:"done"},
@@ -1024,6 +1085,7 @@ const CASES = [
     status:"Hearing", stage:"Settlement Talks", urgent:false,
     client:"P. Nair", clientPhone:"+91 97456 23410",
     tags:["Family","Divorce","Settlement"],
+    correspondentCounsel: null,
     history:[
       {date:"14 Aug 2023",ev:"Petition filed",note:"Mutual consent not established",t:"done"},
       {date:"20 Oct 2023",ev:"Mediation referred",note:"",t:"done"},
@@ -1034,25 +1096,119 @@ const CASES = [
   }
 ];
 
+/* ══════════════════════════════════════════════════════════
+   WhatsApp Templates
+══════════════════════════════════════════════════════════ */
+function getWATemplates(c) {
+  if(!c) return [];
+  const dateStr = c.nextDateStr;
+  const court = c.court;
+  const name = c.petitioner.split(' ')[0]; // First name
+  const caseNo = c.filingNo;
+
+  return [
+    {
+      id: 'hearing_reminder',
+      label: currentLang === 'ml' ? 'ഹിയറിംഗ് ഓർമ്മപ്പെടുത്തൽ' : currentLang === 'hi' ? 'सुनवाई अनुस्मारक' : 'Hearing Reminder',
+      ml: `🏛️ *NyayTrack — കോടതി ഓർമ്മപ്പെടുത്തൽ*
+
+നമസ്കാരം ${name} ജി,
+
+നിങ്ങളുടെ കേസ് *(${caseNo})* ൻ്റെ അടുത്ത ഹിയറിംഗ് ഇതാ:
+
+📅 *തീയതി:* ${dateStr}
+🏛️ *കോടതി:* ${court}
+⚖️ *ഘട്ടം:* ${c.stage}
+
+കൃത്യസമയത്ത് എത്തിച്ചേരുക. കൂടുതൽ വിവരങ്ങൾക്ക് ബന്ധപ്പെടുക.
+
+— *Adv. Anitha Mohan*
+📞 +91 98765 00000`,
+      en: `🏛️ *NyayTrack — Court Reminder*\n\nDear ${name},\n\nYour case *(${caseNo})* next hearing:\n📅 *Date:* ${dateStr}\n🏛️ *Court:* ${court}\n⚖️ *Stage:* ${c.stage}\n\nPlease attend on time.\n— *Adv. Anitha Mohan*`
+    },
+    {
+      id: 'adjournment',
+      label: currentLang === 'ml' ? 'തീയതി മാറ്റം' : currentLang === 'hi' ? 'स्थगन सूचना' : 'Adjournment Notice',
+      ml: `🏛️ *NyayTrack — തീയതി മാറ്റം*
+
+${name} ജി,
+
+നിങ്ങളുടെ കേസ് *(${caseNo})* ൻ്റെ ഹിയറിംഗ് തീയതി മാറ്റിയിരിക്കുന്നു.
+
+📅 *പുതിയ തീയതി:* ${dateStr}
+🏛️ *കോടതി:* ${court}
+
+ഏതെങ്കിലും ചോദ്യങ്ങൾക്ക് ബന്ധപ്പെടുക.
+
+— *Adv. Anitha Mohan*
+📞 +91 98765 00000`,
+      en: `📅 *NyayTrack — Date Changed*\n\nDear ${name},\n\nYour case *(${caseNo})* hearing has been adjourned.\n\n📅 *New Date:* ${dateStr}\n🏛️ *Court:* ${court}\n\n— *Adv. Anitha Mohan*`
+    },
+    {
+      id: 'court_closed',
+      label: currentLang === 'ml' ? 'കോടതി അടഞ്ഞിരിക്കുന്നു' : currentLang === 'hi' ? 'न्यायालय बंद' : 'Court Closed',
+      ml: `⚠️ *NyayTrack — കോടതി അടഞ്ഞിരിക്കുന്നു*
+
+${name} ജി,
+
+ഇന്ന് ${court} അടഞ്ഞിരിക്കുന്നതിനാൽ നിങ്ങളുടെ കേസ് *(${caseNo})* ൻ്റെ ഹിയറിംഗ് നടക്കില്ല.
+
+📅 *അടുത്ത തീയതി:* ${dateStr}
+🏛️ *കോടതി:* ${court}
+
+ദയവുശ്ശേഷം ആ ദിവസം കൃത്യസമയത്ത് എത്തിച്ചേരുക.
+
+— *Adv. Anitha Mohan*
+📞 +91 98765 00000`,
+      en: `⚠️ *NyayTrack — Court Closed Today*\n\nDear ${name},\n\nToday's hearing for case *(${caseNo})* is cancelled — court is closed.\n\n📅 *Next Date:* ${dateStr}\n\n— *Adv. Anitha Mohan*`
+    },
+    {
+      id: 'order_pronounced',
+      label: currentLang === 'ml' ? 'ഉത്തരവ് പ്രഖ്യാപനം' : currentLang === 'hi' ? 'आदेश सूचना' : 'Order Pronounced',
+      ml: `✅ *NyayTrack — ഉത്തരവ്*
+
+${name} ജി,
+
+നിങ്ങളുടെ കേസ് *(${caseNo})* ൽ ഉത്തരവ് ഇറങ്ങിയിരിക്കുന്നു.
+
+📅 *തീയതി:* ${dateStr}
+🏛️ *കോടതി:* ${court}
+
+ദയവുശ്ശേഷം ഉടൻ ഞങ്ങളുടെ ഓഫീസുമായി ബന്ധപ്പെടുക. വിശദ വിവരങ്ങൾ നൽകുന്നതാണ്.
+
+— *Adv. Anitha Mohan*
+📞 +91 98765 00000`,
+      en: `✅ *NyayTrack — Order Pronounced*\n\nDear ${name},\n\nOrder has been passed in your case *(${caseNo})*.\n\nPlease contact our office at the earliest for full details.\n\n— *Adv. Anitha Mohan*`
+    }
+  ];
+}
+
+/* ══════════════════════════════════════════════════════════
+   State
+══════════════════════════════════════════════════════════ */
 let selected = null;
 let filter = 'all';
+let selectedTemplate = null;
 
 function daysLeft(d){ const t=new Date(); t.setHours(0,0,0,0); return Math.ceil((new Date(d)-t)/86400000); }
 function badgeCls(s){ return s==='Hearing'?'b-hearing':s==='Reserved'?'b-reserved':s==='Notice Issued'?'b-notice':'b-disposed'; }
 
 function filtered(){
-  const t=new Date(); t.setHours(0,0,0,0);
-  const w=new Date(t); w.setDate(w.getDate()+7);
+  const now=new Date(); now.setHours(0,0,0,0);
+  const w=new Date(now); w.setDate(w.getDate()+7);
   if(filter==='urgent') return CASES.filter(c=>c.urgent);
-  if(filter==='week') return CASES.filter(c=>{ const d=new Date(c.nextDate); return d>=t&&d<=w; });
+  if(filter==='week') return CASES.filter(c=>{ const d=new Date(c.nextDate); return d>=now&&d<=w; });
   if(filter==='disposed') return CASES.filter(c=>c.status==='Disposed');
   return CASES;
 }
 
+/* ══════════════════════════════════════════════════════════
+   Render
+══════════════════════════════════════════════════════════ */
 function renderTable(cases){
   const body=document.getElementById('tableBody');
   if(!body) return;
-  if(!cases.length){ body.innerHTML='<div style="padding:28px;text-align:center;color:var(--text3);font-size:13px;">No cases found</div>'; return; }
+  if(!cases.length){ body.innerHTML=`<div style="padding:28px;text-align:center;color:var(--text3);font-size:13px;">${t('no_cases')||'No cases found'}</div>`; return; }
   body.innerHTML=cases.map(c=>{
     const dl=daysLeft(c.nextDate);
     const hot=dl<=2;
@@ -1086,17 +1242,46 @@ function renderMobile(cases){
   }).join('');
 }
 
+function buildCounselHTML(c) {
+  if(!c.correspondentCounsel) return '';
+  const cc = c.correspondentCounsel;
+  return `<div class="counsel-box">
+    <div class="counsel-type">${t('counsel_type_corresp')}</div>
+    <div class="counsel-row">
+      <div>
+        <div class="counsel-name">${cc.name}</div>
+        <div class="counsel-bar">Bar No: ${cc.barNo}</div>
+        <div class="counsel-bar">${cc.court}</div>
+      </div>
+      <a class="counsel-phone" href="tel:${cc.phone}">${cc.phone}</a>
+    </div>
+  </div>`;
+}
+
 function buildDetail(c, ids){
   document.getElementById(ids.name).textContent = c.title;
-  document.getElementById(ids.meta).innerHTML = `<span>${c.court}</span> · ${c.courtNo}<br>Judge: <span>${c.judge}</span><br>Filing: <span>${c.filingNo}</span>`;
-  document.getElementById(ids.tags).innerHTML = c.tags.map((t,i)=>`<span class="tag${i===0?' blue':''}">${t}</span>`).join('');
+  document.getElementById(ids.meta).innerHTML = `<span>${c.court}</span> · ${c.courtNo}<br>${currentLang==='ml'?'ജഡ്ജ്':'Judge'}: <span>${c.judge}</span><br>${currentLang==='ml'?'ഫയലിംഗ്':'Filing'}: <span>${c.filingNo}</span>`;
+  document.getElementById(ids.tags).innerHTML = c.tags.map((tg,i)=>`<span class="tag${i===0?' blue':''}">${tg}</span>`).join('');
   document.getElementById(ids.info).innerHTML = `
-    <div class="info-item"><div class="ik">Petitioner</div><div class="iv">${c.petitioner}</div></div>
-    <div class="info-item"><div class="ik">Respondent</div><div class="iv">${c.respondent}</div></div>
-    <div class="info-item"><div class="ik">Pet. Advocate</div><div class="iv">${c.petAdv}</div></div>
-    <div class="info-item"><div class="ik">Res. Advocate</div><div class="iv">${c.resAdv}</div></div>
-    <div class="info-item"><div class="ik">Next Hearing</div><div class="iv accent">${c.nextDateStr}</div></div>
-    <div class="info-item"><div class="ik">Stage</div><div class="iv">${c.stage}</div></div>`;
+    <div class="info-item"><div class="ik">${t('petitioner')}</div><div class="iv">${c.petitioner}</div></div>
+    <div class="info-item"><div class="ik">${t('respondent')}</div><div class="iv">${c.respondent}</div></div>
+    <div class="info-item"><div class="ik">${t('pet_adv')}</div><div class="iv">${c.petAdv}</div></div>
+    <div class="info-item"><div class="ik">${t('res_adv')}</div><div class="iv">${c.resAdv}</div></div>
+    <div class="info-item"><div class="ik">${t('next_hearing')}</div><div class="iv accent">${c.nextDateStr}</div></div>
+    <div class="info-item"><div class="ik">${t('stage')}</div><div class="iv">${c.stage}</div></div>`;
+
+  // Counsel section
+  if(ids.counselSection && ids.counsel) {
+    const sec = document.getElementById(ids.counselSection);
+    const html = buildCounselHTML(c);
+    if(html) {
+      document.getElementById(ids.counsel).innerHTML = html;
+      sec.style.display = 'block';
+    } else {
+      sec.style.display = 'none';
+    }
+  }
+
   document.getElementById(ids.timeline).innerHTML = c.history.map(h=>`
     <div class="tl-row">
       <div class="tl-spine"><div class="tl-dot ${h.t}"></div><div class="tl-line"></div></div>
@@ -1106,26 +1291,29 @@ function buildDetail(c, ids){
         ${h.note?`<div class="tl-note">${h.note}</div>`:''}
       </div>
     </div>`).join('');
+
   if(ids.client){
-    document.getElementById(ids.client).innerHTML = `Client: <strong>${c.petitioner}</strong> · ${c.clientPhone}`;
+    document.getElementById(ids.client).innerHTML = `${t('client_label')}: <strong>${c.petitioner}</strong> · ${c.clientPhone}`;
   }
 }
 
 function selectCase(id){
   selected = CASES.find(c=>c.id===id);
   if(!selected) return;
-
   // Desktop detail panel
   const dc = document.getElementById('detailCard');
-  if(dc){ dc.classList.add('visible'); buildDetail(selected,{name:'dName',meta:'dMeta',tags:'dTags',info:'dInfo',timeline:'dTimeline',client:'dClient'}); document.getElementById('dNotifyWrap').style.display='block'; }
-
+  if(dc){
+    dc.classList.add('visible');
+    buildDetail(selected,{name:'dName',meta:'dMeta',tags:'dTags',info:'dInfo',timeline:'dTimeline',client:'dClient',counsel:'dCounsel',counselSection:'dCounselSection'});
+    document.getElementById('dNotifyWrap').style.display='block';
+  }
   // Mobile sheet
   const isMobile = window.innerWidth <= 768;
   if(isMobile){
-    buildDetail(selected,{name:'shName',meta:'shMeta',tags:'shTags',info:'shInfo',timeline:'shTimeline',client:'shClient'});
+    const shCounselSection = document.getElementById('shCounselSection');
+    buildDetail(selected,{name:'shName',meta:'shMeta',tags:'shTags',info:'shInfo',timeline:'shTimeline',client:'shClient',counsel:'shCounsel',counselSection:'shCounselSection'});
     openSheet();
   }
-
   renderTable(filtered());
   renderMobile(filtered());
 }
@@ -1134,10 +1322,9 @@ function filterCases(f, el){
   filter=f;
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
-  // Sync both sidebars
-  const labels={all:'All Cases',urgent:'Urgent Cases',week:'This Week',disposed:'Disposed Cases'};
-  document.getElementById('pageTitle').textContent = labels[f];
-  document.getElementById('tableTitle').textContent = labels[f];
+  const labels={all:t('all_cases'),urgent:t('urgent_cases'),week:t('this_week'),disposed:t('disposed_cases')};
+  document.getElementById('pageTitle').textContent = labels[f]||t('all_cases');
+  document.getElementById('tableTitle').textContent = labels[f]||t('all_cases');
   const c=filtered();
   renderTable(c); renderMobile(c);
   closeDrawer();
@@ -1150,7 +1337,74 @@ function searchCases(q){
   renderTable(r); renderMobile(r);
 }
 
-// ── Drawer ────────────────────────────────────────────
+/* ══════════════════════════════════════════════════════════
+   WhatsApp Modal
+══════════════════════════════════════════════════════════ */
+function openWAModal(){
+  if(!selected){ showToast('Select a case first'); return; }
+  selectedTemplate = null;
+  const templates = getWATemplates(selected);
+  const list = document.getElementById('waTemplateList');
+  document.getElementById('waModalSub').textContent = t('wa_template_title')||'Select a template';
+  list.innerHTML = templates.map(tpl => `
+    <div class="wa-template" id="wtpl-${tpl.id}" onclick="selectWATemplate('${tpl.id}')">
+      <div class="wa-tpl-header">
+        <span class="wa-tpl-label">${tpl.label}</span>
+        <div class="wa-tpl-radio"></div>
+      </div>
+      <div class="wa-tpl-body">
+        <div class="ml-text">${tpl.ml.substring(0,120)}…</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('waPreview').classList.remove('show');
+  document.getElementById('waCopyBtn').style.display='none';
+  document.getElementById('waModalOverlay').classList.add('open');
+}
+function closeWAModal(){ document.getElementById('waModalOverlay').classList.remove('open'); }
+function closeWAModalOutside(e){ if(e.target===document.getElementById('waModalOverlay')) closeWAModal(); }
+
+function selectWATemplate(id){
+  selectedTemplate = id;
+  document.querySelectorAll('.wa-template').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('wtpl-'+id).classList.add('selected');
+  const templates = getWATemplates(selected);
+  const tpl = templates.find(t=>t.id===id);
+  if(tpl){
+    const preview = document.getElementById('waPreview');
+    preview.textContent = tpl.ml;
+    preview.classList.add('show');
+    document.getElementById('waCopyBtn').style.display='inline-flex';
+  }
+}
+
+function sendWA(){
+  if(!selected) return;
+  const templates = getWATemplates(selected);
+  let msg = '';
+  if(selectedTemplate) {
+    const tpl = templates.find(t=>t.id===selectedTemplate);
+    msg = tpl ? tpl.ml : templates[0].ml;
+  } else {
+    msg = templates[0].ml;
+  }
+  const phone = selected.clientPhone.replace(/\s+/g,'').replace('+','');
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+  closeWAModal();
+  showToast(t('toast_sent')||'✓ Opening WhatsApp');
+}
+
+function copyWAText(){
+  if(!selectedTemplate||!selected) return;
+  const templates = getWATemplates(selected);
+  const tpl = templates.find(tt=>tt.id===selectedTemplate);
+  if(!tpl) return;
+  navigator.clipboard.writeText(tpl.ml).then(()=>showToast('✓ Copied to clipboard'));
+}
+
+/* ══════════════════════════════════════════════════════════
+   UI Controls
+══════════════════════════════════════════════════════════ */
 function openDrawer(){
   document.getElementById('drawer').classList.add('open');
   document.getElementById('drawerOverlay').style.display='block';
@@ -1163,7 +1417,6 @@ function closeDrawer(){
   setTimeout(()=>o.style.display='',250);
 }
 
-// ── Sheet ─────────────────────────────────────────────
 function openSheet(){
   document.getElementById('sheet').classList.add('open');
   document.getElementById('sheetOverlay').style.display='block';
@@ -1176,30 +1429,36 @@ function closeSheet(){
   setTimeout(()=>o.style.display='',300);
 }
 
-// ── Modal ─────────────────────────────────────────────
 function openModal(){ document.getElementById('modalOverlay').classList.add('open'); setTimeout(()=>document.getElementById('cnrInput').focus(),200); }
 function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
 function closeModalOutside(e){ if(e.target===document.getElementById('modalOverlay')) closeModal(); }
+
 function addCase(){
   const cnr=document.getElementById('cnrInput').value.trim();
   const cl=document.getElementById('clientName').value.trim();
-  if(!cnr||cnr.length<10){showToast('⚠ Enter a valid CNR number');return;}
-  if(!cl){showToast('⚠ Enter client name');return;}
+  if(!cnr||cnr.length<10){showToast(t('val_cnr'));return;}
+  if(!cl){showToast(t('val_client'));return;}
   closeModal();
-  showToast(`Fetching ${cnr} from eCourts…`);
-  setTimeout(()=>showToast(`✓ Case ${cnr} added successfully`),2800);
+  showToast((t('toast_fetching')||'Fetching {cnr}…').replace('{cnr}',cnr));
+  setTimeout(()=>showToast((t('toast_added')||'✓ Case {cnr} added').replace('{cnr}',cnr)),2800);
 }
 
-// ── Actions ───────────────────────────────────────────
-function sendNotif(ch){ if(!selected)return; showToast(`✓ ${ch} sent to ${selected.petitioner}`); }
-function resendAlert(){ document.getElementById('alertBanner').style.display='none'; showToast('✓ Reminder resent via WhatsApp'); }
+function sendNotif(ch){
+  if(!selected)return;
+  showToast((t('toast_notif')||'✓ {ch} sent to {name}').replace('{ch}',ch).replace('{name}',selected.petitioner));
+}
+function resendAlert(){
+  document.getElementById('alertBanner').style.display='none';
+  showToast(t('toast_resent')||'✓ Reminder resent via WhatsApp');
+}
 function triggerSync(){
-  showToast('Syncing with eCourts…');
+  showToast(t('toast_syncing')||'Syncing…');
   const now=new Date();
-  const t=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  const timeStr=now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
   setTimeout(()=>{
-    ['syncTime','syncTimeD'].forEach(id=>{ const el=document.getElementById(id); if(el)el.textContent=t; });
-    showToast('✓ All cases synced');
+    const el=document.getElementById('syncTime');
+    if(el) el.textContent=timeStr;
+    showToast(t('toast_synced')||'✓ All cases synced');
   },2000);
 }
 function exportCSV(){
@@ -1207,10 +1466,9 @@ function exportCSV(){
   const a=document.createElement('a');
   a.href='data:text/csv,'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n'));
   a.download='nyaytrack_cases.csv'; a.click();
-  showToast('✓ Exported as CSV');
+  showToast(t('toast_exported')||'✓ Exported as CSV');
 }
 
-// ── Toast ─────────────────────────────────────────────
 let tt;
 function showToast(msg){
   clearTimeout(tt);
@@ -1219,12 +1477,21 @@ function showToast(msg){
   tt=setTimeout(()=>el.classList.remove('show'),3000);
 }
 
-// ── Init ──────────────────────────────────────────────
+/* ══════════════════════════════════════════════════════════
+   Init
+══════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded',()=>{
   renderTable(CASES);
   renderMobile(CASES);
   setTimeout(()=>selectCase(1),150);
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModal(); closeSheet(); closeDrawer(); } });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){ closeModal(); closeSheet(); closeDrawer(); closeWAModal(); }
+  });
+  // Set initial i18n
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    el.textContent=t(key);
+  });
 });
 </script>
 </body>
